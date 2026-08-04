@@ -171,8 +171,8 @@
   .radio-opt.checked{border-color:var(--eaton-blue);background:#EAF3FC;}
   .radio-opt span{font-size:14px;font-weight:600;}
 
-  .submit-btn{width:100%;padding:16px;border:none;border-radius:14px;background:var(--eaton-blue);color:var(--foam);font-weight:800;font-size:16px;margin-top:6px;}
-  .submit-btn:disabled{background:#B9C4CC;}
+  .-btn{width:100%;padding:16px;border:none;border-radius:14px;background:var(--eaton-blue);color:var(--foam);font-weight:800;font-size:16px;margin-top:6px;}
+  .-btn:disabled{background:#B9C4CC;}
   .form-msg{margin-top:14px;font-size:14px;font-weight:600;text-align:center;padding:12px;border-radius:10px;display:none;}
   .form-msg.show{display:block;}
   .form-msg.err{background:#FCE8E6;color:#B3261E;}
@@ -181,6 +181,22 @@
   .locked-banner{background:#FCE8E6;border:1px solid #F3B7B1;color:#8C1D18;border-radius:var(--radius);padding:20px;text-align:center;max-width:640px;margin:0 auto 24px;font-weight:600;}
 
   /* ---------- E-TICKET RESULT ---------- */
+  .review-card{background:var(--foam);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px;max-width:640px;margin:0 auto;}
+  .review-card h3{font-size:20px;color:var(--harbor-navy);margin-bottom:6px;}
+  .review-card .review-sub{font-size:14px;color:var(--muted);margin-bottom:22px;}
+  .review-list{display:grid;gap:14px;margin-bottom:26px;}
+  .review-row{display:flex;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+  .review-row:last-child{border-bottom:none;padding-bottom:0;}
+  .review-row .k{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);}
+  .review-row .v{font-weight:700;color:var(--harbor-navy);text-align:right;max-width:60%;}
+  .review-btns{display:flex;gap:12px;flex-wrap:wrap;}
+  .review-btns button{flex:1;min-width:140px;padding:14px;border-radius:14px;font-weight:800;font-size:15px;border:none;}
+  .btn-edit{background:var(--sand);color:var(--harbor-navy);border:1.5px solid var(--line) !important;}
+  .btn-confirm{background:var(--eaton-blue);color:#fff;}
+  .btn-confirm:disabled{background:#B9C4CC;}
+  .eticket-actions{display:flex;flex-direction:column;gap:10px;}
+  .calendar-btn{width:100%;padding:14px;border:1.5px solid rgba(255,255,255,.3);border-radius:12px;background:transparent;color:var(--foam);font-weight:800;}
+  .eticket{max-width:420px;
   .eticket{max-width:420px;margin:0 auto;background:var(--harbor-navy);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);color:var(--foam);}
   .eticket-top{padding:22px 24px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,var(--eaton-blue),var(--turquoise-dark));}
   .eticket-top img{height:20px;filter:brightness(0) invert(1);}
@@ -414,6 +430,7 @@
       <div class="form-msg" id="form-msg"></div>
     </form>
 
+    <div id="review-wrap" style="display:none;"></div>
     <div id="eticket-wrap" style="display:none;margin-top:32px;"></div>
   </div>
 </section>
@@ -492,6 +509,10 @@ const I18N = {
     "reg.transportLabel":"Transportasi","reg.transportBus":"Bus disediakan panitia","reg.transportPribadi":"Kendaraan pribadi",
     "reg.notesLabel":"Catatan Tambahan (opsional)","reg.notesPlaceholder":"Alergi makanan, kebutuhan khusus, dll.",
     "reg.submit":"Daftar Sekarang",
+    "review.title":"Tinjau Data Anda","review.sub":"Pastikan data sudah benar sebelum dikirim.",
+    "review.nik":"NIK / No. Karyawan","review.nama":"Nama Karyawan","review.kaos":"Ukuran Kaos",
+    "review.members":"Anggota Keluarga (usia)","review.transport":"Transportasi","review.notes":"Catatan",
+    "review.none":"-","review.edit":"← Ubah Data","review.confirm":"Sudah Benar, Kirim",
     "loc.eyebrow":"Lokasi Acara","loc.h2":"Harris Resort Barelang, Batam",
     "loc.addr":"<b>Harris Resort Barelang Batam</b> — Kepulauan Riau, Indonesia","loc.cta":"Buka di Google Maps",
     "footer.p":"Ada pertanyaan seputar pendaftaran atau acara?",
@@ -499,7 +520,7 @@ const I18N = {
     "nik.already":"Keluarga ini sudah terdaftar. Data Anda akan diperbarui.",
     "member.age":"Usia","submit.sending":"Mengirim...","submit.error":"Gagal mengirim. Periksa koneksi dan coba lagi.",
     "eticket.title":"Berhasil didaftarkan!","eticket.code":"Kode","eticket.members":"Anggota Keluarga","eticket.transport":"Transportasi",
-    "eticket.download":"Unduh E-Tiket","eticket.note":"Tunjukkan QR ini di gerbang check-in pada hari-H."
+    "eticket.download":"Simpan E-Tiket","eticket.addCalendar":"Tambahkan ke Kalender","eticket.note":"Tunjukkan QR ini di gerbang check-in pada hari-H."
   },
   en: {
     "hero.eyebrow":"PT Fluid Sciences Batam presents",
@@ -531,6 +552,10 @@ const I18N = {
     "reg.transportLabel":"Transportation","reg.transportBus":"Committee-provided bus","reg.transportPribadi":"Personal vehicle",
     "reg.notesLabel":"Additional Notes (optional)","reg.notesPlaceholder":"Food allergies, special needs, etc.",
     "reg.submit":"Register Now",
+    "review.title":"Review Your Details","review.sub":"Make sure everything is correct before sending.",
+    "review.nik":"Employee ID","review.nama":"Employee Name","review.kaos":"T-Shirt Size",
+    "review.members":"Family Members (ages)","review.transport":"Transportation","review.notes":"Notes",
+    "review.none":"-","review.edit":"← Edit Details","review.confirm":"Confirmed, Send",
     "loc.eyebrow":"Venue","loc.h2":"Harris Resort Barelang, Batam",
     "loc.addr":"<b>Harris Resort Barelang Batam</b> — Riau Islands, Indonesia","loc.cta":"Open in Google Maps",
     "footer.p":"Questions about registration or the event?",
@@ -538,7 +563,7 @@ const I18N = {
     "nik.already":"This family is already registered. Your details will be updated.",
     "member.age":"Age","submit.sending":"Sending...","submit.error":"Failed to send. Check your connection and try again.",
     "eticket.title":"Registered successfully!","eticket.code":"Code","eticket.members":"Family Members","eticket.transport":"Transportation",
-    "eticket.download":"Download E-Ticket","eticket.note":"Show this QR at the check-in gate on the day."
+    "eticket.download":"Save E-Ticket","eticket.addCalendar":"Add to Calendar","eticket.note":"Show this QR at the check-in gate on the day."
   }
 };
 let currentLang = "id";
@@ -667,7 +692,7 @@ const formMsg = document.getElementById("form-msg");
 const submitBtn = document.getElementById("submit-btn");
 const formStart = Date.now();
 
-form.addEventListener("submit", async (e)=>{
+form.addEventListener("submit", (e)=>{
   e.preventDefault();
   formMsg.className = "form-msg"; formMsg.style.display="none";
 
@@ -693,12 +718,56 @@ form.addEventListener("submit", async (e)=>{
     transportasi: transportRadio.value,
     catatan: document.getElementById("catatan").value,
     website: document.getElementById("website").value, // honeypot
-    elapsed: Date.now() - formStart
+    elapsed: 0
   };
 
-  submitBtn.disabled = true;
-  formMsg.className = "form-msg show info";
-  formMsg.textContent = t("submit.sending");
+  showReview(payload, ages);
+});
+
+function showReview(payload, ages){
+  const transportLabel = payload.transportasi === "Bus Panitia" ? t("reg.transportBus") : t("reg.transportPribadi");
+  const membersLabel = ages.length ? ages.map(a => a + " th").join(", ") : t("review.none");
+  const notesLabel = payload.catatan && payload.catatan.trim() ? payload.catatan : t("review.none");
+
+  const wrap = document.getElementById("review-wrap");
+  wrap.innerHTML = `
+    <div class="review-card">
+      <h3>${t("review.title")}</h3>
+      <p class="review-sub">${t("review.sub")}</p>
+      <div class="review-list">
+        <div class="review-row"><div class="k">${t("review.nik")}</div><div class="v">${payload.nik}</div></div>
+        <div class="review-row"><div class="k">${t("review.nama")}</div><div class="v">${validatedNama}</div></div>
+        <div class="review-row"><div class="k">${t("review.kaos")}</div><div class="v">${payload.ukuranKaos}</div></div>
+        <div class="review-row"><div class="k">${t("review.members")}</div><div class="v">${membersLabel}</div></div>
+        <div class="review-row"><div class="k">${t("review.transport")}</div><div class="v">${transportLabel}</div></div>
+        <div class="review-row"><div class="k">${t("review.notes")}</div><div class="v">${notesLabel}</div></div>
+      </div>
+      <div class="review-btns">
+        <button type="button" class="btn-edit" id="review-edit">${t("review.edit")}</button>
+        <button type="button" class="btn-confirm" id="review-confirm">${t("review.confirm")}</button>
+      </div>
+    </div>`;
+
+  form.style.display = "none";
+  wrap.style.display = "block";
+  wrap.scrollIntoView({behavior:"smooth", block:"center"});
+
+  document.getElementById("review-edit").addEventListener("click", ()=>{
+    wrap.style.display = "none";
+    form.style.display = "block";
+    form.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+  document.getElementById("review-confirm").addEventListener("click", ()=>sendRegistration(payload));
+}
+
+async function sendRegistration(payload){
+  payload.elapsed = Date.now() - formStart;
+  const wrap = document.getElementById("review-wrap");
+  const confirmBtn = document.getElementById("review-confirm");
+  const editBtn = document.getElementById("review-edit");
+  confirmBtn.disabled = true;
+  editBtn.disabled = true;
+  confirmBtn.textContent = t("submit.sending");
 
   try{
     const res = await fetch(CONFIG.SHEETS_URL, {
@@ -708,20 +777,25 @@ form.addEventListener("submit", async (e)=>{
     });
     const data = await res.json();
     if(data.success){
-      form.style.display = "none";
-      formMsg.style.display = "none";
+      wrap.style.display = "none";
       renderETicket(data);
     } else {
+      wrap.style.display = "none";
+      form.style.display = "block";
       formMsg.className = "form-msg show err";
+      formMsg.style.display = "block";
       formMsg.textContent = data.message || t("submit.error");
       submitBtn.disabled = false;
     }
   }catch(err){
+    wrap.style.display = "none";
+    form.style.display = "block";
     formMsg.className = "form-msg show err";
+    formMsg.style.display = "block";
     formMsg.textContent = t("submit.error");
     submitBtn.disabled = false;
   }
-});
+}
 
 function renderETicket(data){
   const wrap = document.getElementById("eticket-wrap");
@@ -739,7 +813,10 @@ function renderETicket(data){
         </div>
       </div>
       <div class="eticket-foot">
-        <button class="download-btn" id="download-eticket">${t("eticket.download")}</button>
+        <div class="eticket-actions">
+          <button class="download-btn" id="download-eticket">${t("eticket.download")}</button>
+          <button class="calendar-btn" id="add-calendar">📅 ${t("eticket.addCalendar")}</button>
+        </div>
         <p style="text-align:center;font-size:12px;opacity:.6;margin-top:10px;">${t("eticket.note")}</p>
       </div>
     </div>`;
@@ -748,6 +825,7 @@ function renderETicket(data){
     colorDark:"#0A2E4D", colorLight:"#ffffff"
   });
   document.getElementById("download-eticket").addEventListener("click", ()=>downloadETicket(data));
+  document.getElementById("add-calendar").addEventListener("click", ()=>downloadICS(data));
   wrap.scrollIntoView({behavior:"smooth", block:"center"});
 }
 
@@ -794,6 +872,35 @@ function downloadETicket(data){
   } else {
     finish();
   }
+}
+function toICSDate(date){
+  return date.toISOString().replace(/[-:]/g,"").split(".")[0] + "Z";
+}
+function downloadICS(data){
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Family Day 2026//PT Fluid Sciences Batam//ID",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    "UID:" + data.kodeKeluarga + "@familyday2026.fluidsciences",
+    "DTSTAMP:" + toICSDate(new Date()),
+    "DTSTART:20260913T020000Z",
+    "DTEND:20260913T080000Z",
+    "SUMMARY:Family Day 2026 - PT Fluid Sciences Batam",
+    "DESCRIPTION:Strong as One - Better as Family. Kode keluarga: " + data.kodeKeluarga + ". Tunjukkan QR e-tiket Anda di gerbang check-in.",
+    "LOCATION:Harris Resort Barelang Batam - Kepulauan Riau",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "FamilyDay2026.ics";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(()=>URL.revokeObjectURL(link.href), 2000);
 }
 </script>
 </body>
