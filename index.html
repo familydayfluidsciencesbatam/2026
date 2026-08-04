@@ -769,11 +769,13 @@ function downloadETicket(data){
   ctx.fillText("13 SEP 2026 · 09.00-15.00 · HARRIS RESORT BARELANG", 360, 264);
 
   // Pakai ulang QR yang sudah tampil di layar (#qr-holder), bukan bikin baru
-  const qrImg = document.querySelector("#qr-holder img") || document.querySelector("#qr-holder canvas");
+  const qrCanvas = document.querySelector("#qr-holder canvas");
+  const qrImg = document.querySelector("#qr-holder img");
+  const qrSource = qrCanvas || qrImg;
 
   const finish = ()=>{
     ctx.fillStyle="#ffffff"; ctx.fillRect(200,320,320,320);
-    ctx.drawImage(qrImg,200,320,320,320);
+    ctx.drawImage(qrSource,200,320,320,320);
     ctx.font = "600 22px monospace"; ctx.fillStyle="#ffffff";
     ctx.fillText(data.kodeKeluarga, 360, 690);
     ctx.font = "16px sans-serif";
@@ -787,7 +789,7 @@ function downloadETicket(data){
     link.click();
   };
 
-  if(qrImg.tagName === "IMG" && qrImg.complete === false){
+  if(!qrCanvas && qrImg && !qrImg.complete){
     qrImg.onload = finish;
   } else {
     finish();
