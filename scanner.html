@@ -160,7 +160,7 @@ async function checkinCode(code){
     });
     const data = await res.json();
     if(!data.found){
-      area.innerHTML = `<div class="result-card result-bad"><div class="result-title">✕ Kode tidak ditemukan</div><p style="font-size:14px;">Kode "${code}" tidak ada di data registrasi. Periksa kembali penulisannya.</p></div>`;
+      area.innerHTML = `<div class="result-card result-bad"><div class="result-title">✕ Kode tidak ditemukan</div><p style="font-size:14px;">Kode "${code}" tidak ada di data registrasi. Periksa kembali penulisannya.${data.message ? "<br><br><b>Detail teknis:</b> "+data.message : ""}</p></div>`;
       return;
     }
     const already = data.alreadyCheckedIn;
