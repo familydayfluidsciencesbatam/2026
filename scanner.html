@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-in Panitia — Family Day 2026</title>
+<link rel="icon" href="Logo_EATON.png">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --eaton-blue:#0067C6; --harbor-navy:#0A2E4D; --turquoise:#17A6A0; --marigold:#F2A93B;
+    --sand:#FBF6EC; --foam:#FFFFFF; --ink:#0F2A40; --muted:#5C7284; --line:#E3DBC7;
+    --radius:18px; --shadow:0 16px 40px -18px rgba(10,46,77,.35);
+    --font-display:'Bricolage Grotesque', system-ui, sans-serif;
+    --font-body:'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);background:var(--harbor-navy);color:var(--ink);min-height:100vh;}
+  .wrap{max-width:480px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;}
+  h1{font-family:var(--font-display);}
+  header{display:flex;align-items:center;justify-content:space-between;padding:10px 0 20px;}
+  header img{height:26px;filter:brightness(0) invert(1);}
+  .status-pill{font-family:var(--font-mono);font-size:11px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;}
+  .status-pill.online{color:#8FE3C7;}
+  .status-pill.offline{color:#F3B7B1;}
+
+  .card{background:var(--foam);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:16px;}
+  .card h2{font-size:20px;color:var(--harbor-navy);margin:0 0 6px;}
+  .card p.sub{color:var(--muted);font-size:14px;margin-bottom:18px;}
+  .input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:15px;background:var(--sand);color:var(--ink);}
+  .input:focus{outline:none;border-color:var(--eaton-blue);}
+  .btn{width:100%;padding:14px;border:none;border-radius:12px;font-weight:800;font-size:15px;margin-top:12px;}
+  .btn-primary{background:var(--eaton-blue);color:#fff;}
+  .btn-secondary{background:var(--sand);color:var(--harbor-navy);border:1.5px solid var(--line);}
+  .btn-marigold{background:var(--marigold);color:var(--harbor-navy);}
+
+  #video-wrap{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:1/1;margin-bottom:14px;display:none;}
+  #video{width:100%;height:100%;object-fit:cover;}
+  .scan-frame{position:absolute;inset:14%;border:3px solid var(--marigold);border-radius:18px;pointer-events:none;}
+
+  .result-card{border-radius:var(--radius);padding:24px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .result-ok{background:#E4F5EC;border:2px solid #37A566;}
+  .result-dup{background:#FFF4E0;border:2px solid var(--marigold);}
+  .result-bad{background:#FCE8E6;border:2px solid #D3453E;}
+  .result-title{font-family:var(--font-display);font-weight:800;font-size:19px;margin-bottom:10px;}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;margin-top:10px;}
+  .result-grid .k{font-family:var(--font-mono);text-transform:uppercase;font-size:10px;letter-spacing:.06em;color:var(--muted);}
+  .result-grid .v{font-weight:700;margin-top:2px;}
+  .result-note{grid-column:1/-1;}
+
+  footer{text-align:center;color:rgba(255,255,255,.4);font-size:12px;padding:20px 0;margin-top:auto;}
+  .hidden{display:none !important;}
+  #pin-screen .card{margin-top:20vh;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="Logo_EATON.png" alt="Eaton">
+    <span class="status-pill" id="net-status">•</span>
+  </header>
+
+  <!-- PIN GATE -->
+  <div id="pin-screen">
+    <div class="card">
+      <h2>Check-in Panitia</h2>
+      <p class="sub">Masukkan PIN panitia untuk mulai memindai QR keluarga.</p>
+      <input class="input" type="password" id="pin-input" placeholder="PIN Panitia" inputmode="numeric">
+      <button class="btn btn-primary" id="pin-submit">Masuk</button>
+      <div id="pin-error" style="color:#B3261E;font-size:13px;margin-top:10px;display:none;">PIN salah. Coba lagi.</div>
+    </div>
+  </div>
+
+  <!-- SCANNER -->
+  <div id="scan-screen" class="hidden">
+    <div class="card">
+      <h2>Pindai QR Keluarga</h2>
+      <p class="sub">Arahkan kamera ke QR pada e-tiket keluarga, atau masukkan kode manual.</p>
+      <div id="video-wrap"><video id="video" playsinline muted></video><div class="scan-frame"></div></div>
+      <button class="btn btn-secondary" id="cam-toggle">📷 Aktifkan Kamera</button>
+      <input class="input" style="margin-top:14px;" type="text" id="manual-code" placeholder="Atau ketik kode keluarga, mis. FD26-A1B2C3">
+      <button class="btn btn-marigold" id="manual-submit">Cek Kode</button>
+    </div>
+
+    <div id="result-area"></div>
+  </div>
+
+  <footer>Family Day 2026 · PT Fluid Sciences Batam</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';document.head.appendChild(s);"></script>
+<script>
+/* ============================================================
+   KONFIGURASI — wajib diisi sebelum publish. Lihat KONFIGURASI.md
+   ============================================================ */
+const CONFIG = {
+  ADMIN_URL: "PASTE_URL_WEBAPP_PANITIA_DI_SINI" // .../exec dari AppsScript_2_Panitia_CheckIn.gs
+};
+
+const netStatus = document.getElementById("net-status");
+function updateNetStatus(){
+  const online = navigator.onLine;
+  netStatus.textContent = online ? "● ONLINE" : "● OFFLINE";
+  netStatus.className = "status-pill " + (online ? "online" : "offline");
+}
+window.addEventListener("online", updateNetStatus);
+window.addEventListener("offline", updateNetStatus);
+updateNetStatus();
+
+let adminPin = sessionStorage.getItem("fd26_admin_pin") || "";
+if(adminPin){ showScanScreen(); }
+
+document.getElementById("pin-submit").addEventListener("click", verifyPin);
+document.getElementById("pin-input").addEventListener("keydown", e=>{ if(e.key==="Enter") verifyPin(); });
+
+async function verifyPin(){
+  const val = document.getElementById("pin-input").value.trim();
+  if(!val) return;
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL + "?action=verifyPin&pin=" + encodeURIComponent(val));
+    const data = await res.json();
+    if(data.valid){
+      adminPin = val;
+      sessionStorage.setItem("fd26_admin_pin", val);
+      showScanScreen();
+    } else {
+      document.getElementById("pin-error").style.display = "block";
+    }
+  }catch(err){
+    document.getElementById("pin-error").textContent = "Gagal memeriksa PIN. Periksa koneksi.";
+    document.getElementById("pin-error").style.display = "block";
+  }
+}
+
+function showScanScreen(){
+  document.getElementById("pin-screen").classList.add("hidden");
+  document.getElementById("scan-screen").classList.remove("hidden");
+}
+
+/* ---------------- manual code check ---------------- */
+document.getElementById("manual-submit").addEventListener("click", ()=>{
+  const code = document.getElementById("manual-code").value.trim().toUpperCase();
+  if(code) checkinCode(code);
+});
+document.getElementById("manual-code").addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ const code=e.target.value.trim().toUpperCase(); if(code) checkinCode(code); }
+});
+
+let lastScanned = "";
+let lastScanTime = 0;
+async function checkinCode(code){
+  const area = document.getElementById("result-area");
+  area.innerHTML = `<div class="result-card" style="background:#EAF3FC;border:2px solid var(--eaton-blue);"><div class="result-title">Memeriksa...</div></div>`;
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL, {
+      method:"POST",
+      headers:{"Content-Type":"text/plain"},
+      body: JSON.stringify({ action:"checkin", kodeKeluarga: code, adminPin })
+    });
+    const data = await res.json();
+    if(!data.found){
+      area.innerHTML = `<div class="result-card result-bad"><div class="result-title">✕ Kode tidak ditemukan</div><p style="font-size:14px;">Kode "${code}" tidak ada di data registrasi. Periksa kembali penulisannya.</p></div>`;
+      return;
+    }
+    const already = data.alreadyCheckedIn;
+    area.innerHTML = `
+      <div class="result-card ${already ? "result-dup" : "result-ok"}">
+        <div class="result-title">${already ? "⚠ Sudah check-in sebelumnya" : "✓ Check-in berhasil"}</div>
+        <div class="result-grid">
+          <div><div class="k">Nama Karyawan</div><div class="v">${data.nama}</div></div>
+          <div><div class="k">Kode</div><div class="v">${data.kodeKeluarga}</div></div>
+          <div><div class="k">Anggota Keluarga</div><div class="v">${data.jumlahAnggota}</div></div>
+          <div><div class="k">Transportasi</div><div class="v">${data.transportasi}</div></div>
+          ${already ? `<div><div class="k">Waktu Check-in</div><div class="v">${data.waktuCheckin}</div></div>` : ``}
+          ${data.catatan ? `<div class="result-note"><div class="k">Catatan</div><div class="v">${data.catatan}</div></div>` : ``}
+        </div>
+      </div>`;
+  }catch(err){
+    area.innerHTML = `<div class="result-card result-bad"><div class="result-title">Gagal memeriksa</div><p style="font-size:14px;">Periksa koneksi internet dan coba lagi.</p></div>`;
+  }
+}
+
+/* ---------------- camera scanning ---------------- */
+let stream = null;
+let scanning = false;
+const camToggle = document.getElementById("cam-toggle");
+camToggle.addEventListener("click", async ()=>{
+  if(scanning){ stopCamera(); return; }
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    const video = document.getElementById("video");
+    video.srcObject = stream;
+    await video.play();
+    document.getElementById("video-wrap").style.display = "block";
+    camToggle.textContent = "⏹ Matikan Kamera";
+    scanning = true;
+    requestAnimationFrame(scanLoop);
+  }catch(err){
+    alert("Tidak bisa mengakses kamera. Gunakan input kode manual.");
+  }
+});
+function stopCamera(){
+  scanning = false;
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
+  document.getElementById("video-wrap").style.display = "none";
+  camToggle.textContent = "📷 Aktifkan Kamera";
+}
+function scanLoop(){
+  if(!scanning) return;
+  const video = document.getElementById("video");
+  if(video.readyState === video.HAVE_ENOUGH_DATA && window.jsQR){
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    const code = jsQR(imgData.data, imgData.width, imgData.height);
+    if(code && code.data){
+      const now = Date.now();
+      if(code.data !== lastScanned || now - lastScanTime > 4000){
+        lastScanned = code.data; lastScanTime = now;
+        if(navigator.vibrate) navigator.vibrate(120);
+        checkinCode(code.data.trim().toUpperCase());
+      }
+    }
+  }
+  requestAnimationFrame(scanLoop);
+}
+</script>
+</body>
+</html>
