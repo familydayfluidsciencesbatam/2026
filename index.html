@@ -768,28 +768,30 @@ function downloadETicket(data){
   ctx.font = "16px monospace";
   ctx.fillText("13 SEP 2026 · 09.00-15.00 · HARRIS RESORT BARELANG", 360, 264);
 
-  const qrTemp = document.createElement("div");
-  new QRCode(qrTemp, {text:data.kodeKeluarga, width:320, height:320, colorDark:"#0A2E4D", colorLight:"#ffffff"});
-  setTimeout(()=>{
-    const qrImg = qrTemp.querySelector("img") || qrTemp.querySelector("canvas");
-    const finish = ()=>{
-      ctx.fillStyle="#ffffff"; ctx.fillRect(200,320,320,320);
-      if(qrImg.tagName === "CANVAS") ctx.drawImage(qrImg,200,320,320,320);
-      else ctx.drawImage(qrImg,200,320,320,320);
-      ctx.font = "600 22px monospace"; ctx.fillStyle="#ffffff";
-      ctx.fillText(data.kodeKeluarga, 360, 690);
-      ctx.font = "16px sans-serif";
-      ctx.fillText((data.jumlahAnggota ?? "-") + " anggota keluarga · " + (data.transportasi ?? "-"), 360, 725);
-      ctx.font = "13px sans-serif"; ctx.fillStyle="rgba(255,255,255,.7)";
-      ctx.fillText("Tunjukkan QR ini di gerbang check-in pada hari-H", 360, 900);
-      ctx.fillText("PT Fluid Sciences Batam", 360, 930);
-      const link = document.createElement("a");
-      link.download = "eTiket-FamilyDay2026-" + data.kodeKeluarga + ".png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    };
-    if(qrImg.complete !== false) finish(); else qrImg.onload = finish;
-  }, 200);
+  // Pakai ulang QR yang sudah tampil di layar (#qr-holder), bukan bikin baru
+  const qrImg = document.querySelector("#qr-holder img") || document.querySelector("#qr-holder canvas");
+
+  const finish = ()=>{
+    ctx.fillStyle="#ffffff"; ctx.fillRect(200,320,320,320);
+    ctx.drawImage(qrImg,200,320,320,320);
+    ctx.font = "600 22px monospace"; ctx.fillStyle="#ffffff";
+    ctx.fillText(data.kodeKeluarga, 360, 690);
+    ctx.font = "16px sans-serif";
+    ctx.fillText((data.jumlahAnggota ?? "-") + " anggota keluarga · " + (data.transportasi ?? "-"), 360, 725);
+    ctx.font = "13px sans-serif"; ctx.fillStyle="rgba(255,255,255,.7)";
+    ctx.fillText("Tunjukkan QR ini di gerbang check-in pada hari-H", 360, 900);
+    ctx.fillText("PT Fluid Sciences Batam", 360, 930);
+    const link = document.createElement("a");
+    link.download = "eTiket-FamilyDay2026-" + data.kodeKeluarga + ".png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  };
+
+  if(qrImg.tagName === "IMG" && qrImg.complete === false){
+    qrImg.onload = finish;
+  } else {
+    finish();
+  }
 }
 </script>
 </body>
