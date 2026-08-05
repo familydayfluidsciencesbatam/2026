@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-in Panitia — Family Day 2026</title>
+<link rel="icon" href="Logo_EATON.png">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --eaton-blue:#0067C6; --harbor-navy:#0A2E4D; --turquoise:#17A6A0; --marigold:#F2A93B;
+    --sand:#FBF6EC; --foam:#FFFFFF; --ink:#0F2A40; --muted:#5C7284; --line:#E3DBC7;
+    --radius:18px; --shadow:0 16px 40px -18px rgba(10,46,77,.35);
+    --font-display:'Bricolage Grotesque', system-ui, sans-serif;
+    --font-body:'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);background:var(--harbor-navy);color:var(--ink);min-height:100vh;}
+  .wrap{max-width:520px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;}
+  h1,h2{font-family:var(--font-display);}
+  header{display:flex;align-items:center;justify-content:space-between;padding:10px 0 20px;}
+  header img{height:26px;filter:brightness(0) invert(1);}
+  .status-pill{font-family:var(--font-mono);font-size:11px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;}
+  .status-pill.online{color:#8FE3C7;}
+  .status-pill.offline{color:#F3B7B1;}
+
+  .card{background:var(--foam);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:16px;}
+  .card h2{font-size:19px;color:var(--harbor-navy);margin:0 0 6px;}
+  .card p.sub{color:var(--muted);font-size:13px;margin-bottom:16px;}
+  .input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:15px;background:var(--sand);color:var(--ink);}
+  .input:focus{outline:none;border-color:var(--eaton-blue);}
+  .btn{padding:13px 16px;border:none;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;}
+  .btn-block{width:100%;margin-top:12px;}
+  .btn-primary{background:var(--eaton-blue);color:#fff;}
+  .btn-secondary{background:var(--sand);color:var(--harbor-navy);border:1.5px solid var(--line);}
+  .btn-marigold{background:var(--marigold);color:var(--harbor-navy);}
+  .btn-outline-danger{background:#fff;color:#B3261E;border:1.5px solid #F3B7B1;}
+  .btn-sm{padding:8px 12px;font-size:12px;border-radius:9px;}
+
+  .demo-banner{background:#FFF4E0;border:1.5px solid var(--marigold);border-radius:14px;padding:14px 16px;font-size:13px;color:#7A5410;margin-bottom:16px;line-height:1.5;}
+  .demo-banner code{background:rgba(0,0,0,.06);padding:1px 5px;border-radius:5px;}
+
+  #video-wrap{position:relative;border-radius:16px;overflow:hidden;background:#000;aspect-ratio:1/1;margin-bottom:14px;display:none;}
+  #video{width:100%;height:100%;object-fit:cover;}
+  .scan-frame{position:absolute;inset:14%;border:3px solid var(--marigold);border-radius:18px;pointer-events:none;}
+
+  .result-card{border-radius:var(--radius);padding:22px;margin-bottom:16px;box-shadow:var(--shadow);}
+  .result-ok{background:#E4F5EC;border:2px solid #37A566;}
+  .result-dup{background:#FFF4E0;border:2px solid var(--marigold);}
+  .result-bad{background:#FCE8E6;border:2px solid #D3453E;}
+  .result-title{font-family:var(--font-display);font-weight:800;font-size:18px;margin-bottom:10px;}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;margin-top:10px;}
+  .result-grid .k{font-family:var(--font-mono);text-transform:uppercase;font-size:10px;letter-spacing:.06em;color:var(--muted);}
+  .result-grid .v{font-weight:700;margin-top:2px;}
+  .result-note{grid-column:1/-1;}
+  .receive-box{background:rgba(255,255,255,.55);border-radius:12px;padding:14px;margin-top:14px;}
+  .receive-title{font-weight:800;font-size:13px;color:var(--harbor-navy);margin-bottom:10px;}
+  .receive-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;}
+  .receive-grid .rk{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:block;}
+  .receive-grid .rv{font-weight:800;color:var(--harbor-navy);display:block;margin-top:2px;}
+
+  /* stats */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+  .stats-grid-3{grid-template-columns:repeat(3,1fr);margin-bottom:0;}
+  .stats-grid-3 .stat-box{margin-bottom:0;}
+  .stat-box{background:var(--foam);border-radius:14px;box-shadow:var(--shadow);padding:14px 8px;text-align:center;}
+  .stat-num{font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--harbor-navy);}
+  .stat-lbl{font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-top:2px;}
+
+  /* filter + search */
+  .filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+  .filter-btn{flex:1;min-width:80px;padding:9px;border-radius:10px;border:1.5px solid var(--line);background:var(--foam);color:var(--muted);font-size:12px;font-weight:700;}
+  .filter-btn.active{background:var(--harbor-navy);color:#fff;border-color:var(--harbor-navy);}
+  .search-row{display:flex;gap:8px;margin-bottom:14px;}
+  .search-row .input{flex:1;}
+
+  /* family list */
+  .fam-item{background:var(--sand);border-radius:14px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .fam-info .name{font-weight:800;font-size:14px;color:var(--harbor-navy);}
+  .fam-info .meta{font-size:12px;color:var(--muted);font-family:var(--font-mono);margin-top:2px;}
+  .pill{font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;}
+  .pill-in{background:#E4F5EC;color:#1C7A4C;}
+  .pill-out{background:#EDEDED;color:#767676;}
+  .fam-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+  .list-empty{text-align:center;color:var(--muted);font-size:13px;padding:20px 0;}
+
+  footer{text-align:center;color:rgba(255,255,255,.4);font-size:12px;padding:20px 0;margin-top:auto;}
+  .hidden{display:none !important;}
+  #pin-screen .card{margin-top:20vh;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="Logo_EATON.png" alt="Eaton">
+    <span class="status-pill" id="net-status">•</span>
+  </header>
+
+  <!-- PIN GATE -->
+  <div id="pin-screen">
+    <div class="card">
+      <h2>Check-in Panitia</h2>
+      <p class="sub">Masukkan PIN panitia untuk mulai memindai QR keluarga.</p>
+      <input class="input" type="password" id="pin-input" placeholder="PIN Panitia" inputmode="text" autocomplete="off">
+      <button class="btn btn-primary btn-block" id="pin-submit">Masuk</button>
+      <div id="pin-error" style="color:#B3261E;font-size:13px;margin-top:10px;display:none;">PIN salah. Coba lagi.</div>
+    </div>
+  </div>
+
+  <!-- SCANNER + LIST -->
+  <div id="scan-screen" class="hidden">
+    <div id="demo-banner" class="demo-banner hidden">
+      ⚠️ <b>ADMIN_URL belum diisi.</b> Halaman berjalan dalam <b>mode demo</b> (kode hanya ditampilkan, tidak tersimpan). Isi <code>CONFIG.ADMIN_URL</code> di scanner.html dengan URL Web App dari <code>AppsScript_2_Panitia_CheckIn.gs</code>.
+    </div>
+
+    <div class="card">
+      <h2>Pindai QR Keluarga</h2>
+      <p class="sub">Arahkan kamera ke QR pada e-tiket keluarga, atau masukkan kode manual.</p>
+      <div id="video-wrap"><video id="video" playsinline muted></video><div class="scan-frame"></div></div>
+      <button class="btn btn-secondary btn-block" id="cam-toggle">📷 Aktifkan Kamera</button>
+      <input class="input" style="margin-top:14px;" type="text" id="manual-code" placeholder="Atau ketik kode keluarga, mis. FD26-A1B2C3">
+      <button class="btn btn-marigold btn-block" id="manual-submit">Cek Kode</button>
+    </div>
+
+    <div id="result-area"></div>
+
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-box"><div class="stat-num" id="stat-total">–</div><div class="stat-lbl">Terdaftar</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-in">–</div><div class="stat-lbl">Check-in</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-out">–</div><div class="stat-lbl">Belum</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-people">–</div><div class="stat-lbl">Org Hadir</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Logistik Hari-H</h2>
+      <p class="sub">Dihitung otomatis dari keluarga yang sudah check-in.</p>
+      <div class="stats-grid stats-grid-3">
+        <div class="stat-box"><div class="stat-num" id="stat-snack">–</div><div class="stat-lbl">Snack Box</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-kidsnack">–</div><div class="stat-lbl">Kids Snack</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-lunch">–</div><div class="stat-lbl">Makan Siang</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-kaos">–</div><div class="stat-lbl">Kaos Karyawan</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-bag">–</div><div class="stat-lbl">String Bag</div></div>
+        <div class="stat-box"><div class="stat-num" id="stat-hat">–</div><div class="stat-lbl">Topi</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Daftar Keluarga</h2>
+      <p class="sub">Cadangan manual bila QR sulit terbaca — cari nama atau ketuk langsung untuk check-in.</p>
+      <div class="filter-row">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="in">Sudah</button>
+        <button class="filter-btn" data-filter="out">Belum</button>
+      </div>
+      <div class="search-row">
+        <input class="input" type="text" id="search-input" placeholder="Cari nama atau kode...">
+        <button class="btn btn-secondary" id="refresh-btn">↻</button>
+      </div>
+      <div id="family-list"><div class="list-empty">Ketuk ↻ untuk memuat daftar keluarga.</div></div>
+      <button class="btn btn-secondary btn-block" id="export-btn">⤓ Ekspor CSV</button>
+    </div>
+  </div>
+
+  <footer>Family Day 2026 · PT Fluid Sciences Batam</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.js" onerror="this.onerror=null;var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';document.head.appendChild(s);"></script>
+<script>
+/* ============================================================
+   KONFIGURASI — wajib diisi sebelum publish. Lihat KONFIGURASI.md
+   ============================================================ */
+const CONFIG = {
+  ADMIN_URL: "PASTE_URL_WEBAPP_PANITIA_DI_SINI" // .../exec dari AppsScript_2_Panitia_CheckIn.gs
+};
+const isDemoMode = CONFIG.ADMIN_URL.indexOf("PASTE_URL") === 0;
+
+const netStatus = document.getElementById("net-status");
+function updateNetStatus(){
+  const online = navigator.onLine;
+  netStatus.textContent = online ? "● ONLINE" : "● OFFLINE";
+  netStatus.className = "status-pill " + (online ? "online" : "offline");
+}
+window.addEventListener("online", updateNetStatus);
+window.addEventListener("offline", updateNetStatus);
+updateNetStatus();
+
+/* ---------------- beep sound on successful scan ---------------- */
+function playBeep(){
+  try{
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = 880;
+    osc.connect(gain); gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+    osc.start(); osc.stop(ctx.currentTime + 0.18);
+  }catch(err){ /* abaikan jika audio tidak tersedia */ }
+}
+
+/* ---------------- PIN gate ---------------- */
+let adminPin = sessionStorage.getItem("fd26_admin_pin") || "";
+if(adminPin){ showScanScreen(); }
+
+document.getElementById("pin-submit").addEventListener("click", verifyPin);
+document.getElementById("pin-input").addEventListener("keydown", e=>{ if(e.key==="Enter") verifyPin(); });
+
+async function verifyPin(){
+  const val = document.getElementById("pin-input").value.trim();
+  if(!val) return;
+  if(isDemoMode){
+    adminPin = val;
+    sessionStorage.setItem("fd26_admin_pin", val);
+    showScanScreen();
+    return;
+  }
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL + "?action=verifyPin&pin=" + encodeURIComponent(val));
+    const data = await res.json();
+    if(data.valid){
+      adminPin = val;
+      sessionStorage.setItem("fd26_admin_pin", val);
+      showScanScreen();
+    } else {
+      document.getElementById("pin-error").style.display = "block";
+    }
+  }catch(err){
+    document.getElementById("pin-error").textContent = "Gagal memeriksa PIN. Periksa koneksi.";
+    document.getElementById("pin-error").style.display = "block";
+  }
+}
+
+function showScanScreen(){
+  document.getElementById("pin-screen").classList.add("hidden");
+  document.getElementById("scan-screen").classList.remove("hidden");
+  if(isDemoMode) document.getElementById("demo-banner").classList.remove("hidden");
+  loadFamilyList();
+}
+
+/* ---------------- manual code check ---------------- */
+document.getElementById("manual-submit").addEventListener("click", ()=>{
+  const code = document.getElementById("manual-code").value.trim().toUpperCase();
+  if(code) checkinCode(code);
+});
+document.getElementById("manual-code").addEventListener("keydown", e=>{
+  if(e.key==="Enter"){ const code=e.target.value.trim().toUpperCase(); if(code) checkinCode(code); }
+});
+
+async function checkinCode(code){
+  const area = document.getElementById("result-area");
+  area.innerHTML = `<div class="result-card" style="background:#EAF3FC;border:2px solid var(--eaton-blue);"><div class="result-title">Memeriksa...</div></div>`;
+  area.scrollIntoView({behavior:"smooth", block:"center"});
+
+  if(isDemoMode){
+    area.innerHTML = `<div class="result-card" style="background:#EAF3FC;border:2px solid var(--eaton-blue);"><div class="result-title">Mode Demo</div><p style="font-size:14px;">Kode terbaca: <b>${code}</b>. Hubungkan <code>ADMIN_URL</code> untuk memvalidasi &amp; menyimpan data sesungguhnya.</p></div>`;
+    return;
+  }
+
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL + "?action=lookupCheckin&pin=" + encodeURIComponent(adminPin) + "&kode=" + encodeURIComponent(code));
+    const data = await res.json();
+    if(!data.found){
+      area.innerHTML = `<div class="result-card result-bad"><div class="result-title">✕ Kode tidak ditemukan</div><p style="font-size:14px;">Kode "${code}" tidak ada di data registrasi. Periksa kembali penulisannya.${data.message ? "<br><br><b>Detail teknis:</b> "+data.message : ""}</p></div>`;
+      return;
+    }
+    if(data.alreadyCheckedIn){
+      area.innerHTML = `
+        <div class="result-card result-dup">
+          <div class="result-title">⚠ Sudah check-in sebelumnya</div>
+          <div class="result-grid">
+            <div><div class="k">Nama Karyawan</div><div class="v">${data.nama}</div></div>
+            <div><div class="k">Kode</div><div class="v">${data.kodeKeluarga}</div></div>
+            <div><div class="k">Anggota Keluarga</div><div class="v">${data.jumlahAnggota}</div></div>
+            <div><div class="k">Transportasi</div><div class="v">${data.transportasi}</div></div>
+            <div><div class="k">Waktu Check-in</div><div class="v">${data.waktuCheckin}</div></div>
+            ${data.catatan ? `<div class="result-note"><div class="k">Catatan</div><div class="v">${data.catatan}</div></div>` : ``}
+          </div>
+          <button class="btn btn-outline-danger btn-block" style="margin-top:14px;" onclick="undoCheckin('${data.kodeKeluarga}')">↩ Batalkan Check-in</button>
+        </div>`;
+      return;
+    }
+    renderReviewCheckin(data);
+  }catch(err){
+    area.innerHTML = `<div class="result-card result-bad"><div class="result-title">Gagal memeriksa</div><p style="font-size:14px;">Periksa koneksi internet dan coba lagi.</p></div>`;
+  }
+}
+
+function renderReviewCheckin(data){
+  const area = document.getElementById("result-area");
+  let ages = [];
+  try{ ages = JSON.parse(data.usiaAnggota || "[]"); }catch(e){ ages = []; }
+
+  area.innerHTML = `
+    <div class="result-card" style="background:#EAF3FC;border:2px solid var(--eaton-blue);">
+      <div class="result-title">📋 Tinjau Data Sebelum Check-in</div>
+      <p style="font-size:13px;color:var(--muted);margin:-4px 0 14px;">Pastikan data sesuai kondisi hari ini. Ubah bila perlu, lalu Konfirmasi.</p>
+
+      <div style="margin-bottom:12px;">
+        <div style="font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);">Nama Karyawan</div>
+        <div style="font-weight:800;font-size:16px;color:var(--harbor-navy);">${data.nama}</div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px;font-weight:700;color:var(--harbor-navy);display:block;margin-bottom:6px;">Ukuran Kaos Karyawan</label>
+        <select class="input" id="review-kaos">
+          ${["S","M","L","XL","XXL","XXXL"].map(s=>`<option value="${s}" ${data.ukuranKaos===s?"selected":""}>${s}</option>`).join("")}
+        </select>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px;font-weight:700;color:var(--harbor-navy);display:block;margin-bottom:6px;">Anggota Keluarga yang Hadir (usia)</label>
+        <div id="review-member-rows"></div>
+        <button type="button" class="btn btn-secondary btn-sm" id="review-add-member" style="margin-top:4px;">+ Tambah Anggota</button>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label style="font-size:12px;font-weight:700;color:var(--harbor-navy);display:block;margin-bottom:6px;">Transportasi</label>
+        <select class="input" id="review-transport">
+          <option value="Bus Panitia" ${data.transportasi==="Bus Panitia"?"selected":""}>Bus Panitia</option>
+          <option value="Kendaraan Pribadi" ${data.transportasi==="Kendaraan Pribadi"?"selected":""}>Kendaraan Pribadi</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <label style="font-size:12px;font-weight:700;color:var(--harbor-navy);display:block;margin-bottom:6px;">Catatan</label>
+        <textarea class="input" id="review-notes" style="min-height:60px;">${data.catatan||""}</textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-secondary" style="flex:1;" id="review-cancel">Batal</button>
+        <button class="btn btn-primary" style="flex:2;" id="review-confirm">✓ Konfirmasi Check-in</button>
+      </div>
+    </div>`;
+
+  const rowsEl = document.getElementById("review-member-rows");
+  function addAgeRow(age){
+    const row = document.createElement("div");
+    row.style.display = "flex"; row.style.gap = "8px"; row.style.marginBottom = "6px";
+    row.innerHTML = `<input class="input review-age" type="number" min="0" max="110" value="${age===undefined||age===null?"":age}" placeholder="Usia" style="flex:1;">
+      <button type="button" class="btn btn-sm btn-outline-danger review-remove">×</button>`;
+    row.querySelector(".review-remove").addEventListener("click", ()=>row.remove());
+    rowsEl.appendChild(row);
+  }
+  ages.forEach(a=>addAgeRow(a));
+  document.getElementById("review-add-member").addEventListener("click", ()=>addAgeRow(""));
+
+  document.getElementById("review-cancel").addEventListener("click", ()=>{ area.innerHTML = ""; });
+  document.getElementById("review-confirm").addEventListener("click", ()=>confirmCheckin(data.kodeKeluarga));
+
+  area.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+async function confirmCheckin(kodeKeluarga){
+  const area = document.getElementById("result-area");
+  const ages = Array.from(document.querySelectorAll(".review-age")).map(i=>i.value).filter(v=>v!=="");
+  const payload = {
+    action: "confirmCheckin",
+    kodeKeluarga,
+    adminPin,
+    ukuranKaos: document.getElementById("review-kaos").value,
+    usiaAnggota: JSON.stringify(ages),
+    transportasi: document.getElementById("review-transport").value,
+    catatan: document.getElementById("review-notes").value
+  };
+  area.innerHTML = `<div class="result-card" style="background:#EAF3FC;border:2px solid var(--eaton-blue);"><div class="result-title">Menyimpan...</div></div>`;
+
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL, {
+      method:"POST",
+      headers:{"Content-Type":"text/plain"},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if(!data.found){
+      area.innerHTML = `<div class="result-card result-bad"><div class="result-title">✕ Gagal menyimpan</div><p style="font-size:14px;">Kode tidak ditemukan saat mencoba menyimpan. Coba pindai ulang.</p></div>`;
+      return;
+    }
+    if(data.alreadyCheckedIn){
+      area.innerHTML = `<div class="result-card result-dup"><div class="result-title">⚠ Sudah check-in barusan</div><p style="font-size:14px;">Kemungkinan sudah diproses dari perangkat/petugas lain tepat sebelum ini.</p></div>`;
+      loadFamilyList();
+      return;
+    }
+    playBeep();
+    const kidsCount = ages.filter(a => Number(a) <= KIDS_AGE_MAX).length;
+    const adultsCount = ages.length - kidsCount;
+    const itemSnack = 1 + adultsCount;   // karyawan (dewasa) + anggota dewasa
+    const itemKidsSnack = kidsCount;
+    const itemLunch = 1 + ages.length;   // semua yang hadir dari keluarga ini
+    const itemKaosSize = payload.ukuranKaos;
+
+    area.innerHTML = `
+      <div class="result-card result-ok">
+        <div class="result-title">✓ Check-in berhasil</div>
+        <div class="result-grid">
+          <div><div class="k">Nama Karyawan</div><div class="v">${data.nama}</div></div>
+          <div><div class="k">Kode</div><div class="v">${data.kodeKeluarga}</div></div>
+          <div><div class="k">Anggota Keluarga</div><div class="v">${data.jumlahAnggota}</div></div>
+          <div><div class="k">Transportasi</div><div class="v">${data.transportasi}</div></div>
+          ${data.catatan ? `<div class="result-note"><div class="k">Catatan</div><div class="v">${data.catatan}</div></div>` : ``}
+        </div>
+        <div class="receive-box">
+          <div class="receive-title">🎁 Barang yang Diterima</div>
+          <div class="receive-grid">
+            <div><span class="rk">Snack Box</span><span class="rv">${itemSnack}</span></div>
+            <div><span class="rk">Kids Snack</span><span class="rv">${itemKidsSnack}</span></div>
+            <div><span class="rk">Makan Siang</span><span class="rv">${itemLunch}</span></div>
+            <div><span class="rk">Kaos Karyawan</span><span class="rv">1 (${itemKaosSize})</span></div>
+            <div><span class="rk">String Bag</span><span class="rv">1</span></div>
+            <div><span class="rk">Topi</span><span class="rv">1</span></div>
+          </div>
+        </div>
+        <button class="btn btn-outline-danger btn-block" style="margin-top:14px;" onclick="undoCheckin('${data.kodeKeluarga}')">↩ Batalkan Check-in</button>
+      </div>`;
+    loadFamilyList();
+  }catch(err){
+    area.innerHTML = `<div class="result-card result-bad"><div class="result-title">Gagal menyimpan</div><p style="font-size:14px;">Periksa koneksi internet. Data belum tersimpan, silakan coba Konfirmasi lagi.</p></div>`;
+  }
+}
+
+async function undoCheckin(code){
+  if(isDemoMode){ alert("Mode demo — tidak ada data yang benar-benar diubah."); return; }
+  if(!confirm("Batalkan check-in untuk kode " + code + "?")) return;
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL, {
+      method:"POST",
+      headers:{"Content-Type":"text/plain"},
+      body: JSON.stringify({ action:"undoCheckin", kodeKeluarga: code, adminPin })
+    });
+    const data = await res.json();
+    if(data.found){
+      document.getElementById("result-area").innerHTML = "";
+      loadFamilyList();
+    } else {
+      alert("Gagal membatalkan: kode tidak ditemukan.");
+    }
+  }catch(err){
+    alert("Gagal membatalkan. Periksa koneksi.");
+  }
+}
+
+/* ---------------- family list, stats, filter, search ---------------- */
+let allFamilies = [];
+let currentFilter = "all";
+
+document.getElementById("refresh-btn").addEventListener("click", loadFamilyList);
+document.getElementById("search-input").addEventListener("input", renderFamilyList);
+document.querySelectorAll(".filter-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    renderFamilyList();
+  });
+});
+
+async function loadFamilyList(){
+  const listEl = document.getElementById("family-list");
+  if(isDemoMode){
+    listEl.innerHTML = `<div class="list-empty">Mode demo — hubungkan ADMIN_URL untuk melihat daftar keluarga sesungguhnya.</div>`;
+    setStats(0,0,0,0);
+    return;
+  }
+  listEl.innerHTML = `<div class="list-empty">Memuat...</div>`;
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL + "?action=list&pin=" + encodeURIComponent(adminPin));
+    const data = await res.json();
+    if(data.error){
+      listEl.innerHTML = `<div class="list-empty">Gagal memuat: ${data.error}</div>`;
+      return;
+    }
+    allFamilies = data.families || [];
+    renderFamilyList();
+  }catch(err){
+    listEl.innerHTML = `<div class="list-empty">Gagal memuat. Periksa koneksi / ADMIN_URL.</div>`;
+  }
+}
+
+function setStats(total, checkedIn, notYet, people){
+  document.getElementById("stat-total").textContent = total;
+  document.getElementById("stat-in").textContent = checkedIn;
+  document.getElementById("stat-out").textContent = notYet;
+  document.getElementById("stat-people").textContent = people;
+}
+
+const KIDS_AGE_MAX = 12; // batas usia "anak" untuk Kids Snack
+
+function computeLogistics(){
+  const checkedIn = allFamilies.filter(f=>f.statusCheckin);
+  let kaos = 0, bag = 0, hat = 0, kidsSnack = 0, snackDewasa = 0, lunch = 0;
+  checkedIn.forEach(f=>{
+    kaos++; bag++; hat++; // 1 per karyawan (yang check-in)
+    let ages = [];
+    try{ ages = JSON.parse(f.usiaAnggota || "[]"); }catch(e){ ages = []; }
+    const kids = ages.filter(a => Number(a) <= KIDS_AGE_MAX).length;
+    const adults = ages.length - kids;
+    kidsSnack += kids;
+    snackDewasa += 1 + adults; // karyawan (dewasa) + anggota dewasa
+    lunch += 1 + ages.length;  // semua yang hadir dari keluarga ini
+  });
+  return { kaos, bag, hat, kidsSnack, snackDewasa, lunch };
+}
+
+function setLogistics(){
+  const l = computeLogistics();
+  document.getElementById("stat-snack").textContent = l.snackDewasa;
+  document.getElementById("stat-kidsnack").textContent = l.kidsSnack;
+  document.getElementById("stat-lunch").textContent = l.lunch;
+  document.getElementById("stat-kaos").textContent = l.kaos;
+  document.getElementById("stat-bag").textContent = l.bag;
+  document.getElementById("stat-hat").textContent = l.hat;
+}
+
+function renderFamilyList(){
+  const total = allFamilies.length;
+  const checkedIn = allFamilies.filter(f=>f.statusCheckin).length;
+  const notYet = total - checkedIn;
+  const people = allFamilies.filter(f=>f.statusCheckin)
+    .reduce((sum,f)=> sum + 1 + (parseInt(f.jumlahAnggota)||0), 0);
+  setStats(total, checkedIn, notYet, people);
+  setLogistics();
+
+  const q = document.getElementById("search-input").value.trim().toLowerCase();
+  let rows = allFamilies;
+  if(currentFilter === "in") rows = rows.filter(f=>f.statusCheckin);
+  if(currentFilter === "out") rows = rows.filter(f=>!f.statusCheckin);
+  if(q) rows = rows.filter(f=>
+    (f.nama||"").toLowerCase().includes(q) || (f.kodeKeluarga||"").toLowerCase().includes(q)
+  );
+
+  const listEl = document.getElementById("family-list");
+  if(rows.length === 0){
+    listEl.innerHTML = `<div class="list-empty">Tidak ada data yang cocok.</div>`;
+    return;
+  }
+  listEl.innerHTML = rows.map(f => `
+    <div class="fam-item">
+      <div class="fam-info">
+        <div class="name">${f.nama}</div>
+        <div class="meta">${f.kodeKeluarga} · ${f.jumlahAnggota} anggota · ${f.transportasi || "-"}</div>
+      </div>
+      <div class="fam-actions">
+        <span class="pill ${f.statusCheckin ? "pill-in" : "pill-out"}">${f.statusCheckin ? "✓ Hadir" : "belum"}</span>
+        ${f.statusCheckin
+          ? `<button class="btn btn-sm btn-outline-danger" onclick="undoCheckin('${f.kodeKeluarga}')">Batalkan</button>`
+          : `<button class="btn btn-sm btn-primary" onclick="checkinCode('${f.kodeKeluarga}')">Check-in</button>`}
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ---------------- export CSV ---------------- */
+document.getElementById("export-btn").addEventListener("click", ()=>{
+  if(allFamilies.length === 0){ alert("Belum ada data untuk diekspor. Muat daftar dulu."); return; }
+  function q(v){ v = (v===null||v===undefined)?"":String(v); return '"' + v.replace(/"/g,'""') + '"'; }
+  const head = ["Kode","Nama","JumlahAnggota","Transportasi","StatusCheckin","WaktuCheckin","Catatan"];
+  const lines = [head.map(q).join(",")];
+  allFamilies.forEach(f=>{
+    lines.push([f.kodeKeluarga, f.nama, f.jumlahAnggota, f.transportasi, (f.statusCheckin?"Hadir":"Belum"), f.waktuCheckin||"", f.catatan||""].map(q).join(","));
+  });
+  const csv = "\ufeff" + lines.join("\r\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const d = new Date();
+  function p(n){ return String(n).padStart(2,"0"); }
+  const fn = "checkin-familyday2026-" + d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"-"+p(d.getHours())+p(d.getMinutes())+".csv";
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = fn;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+});
+
+/* ---------------- camera scanning ---------------- */
+let stream = null;
+let scanning = false;
+const camToggle = document.getElementById("cam-toggle");
+camToggle.addEventListener("click", async ()=>{
+  if(scanning){ stopCamera(); return; }
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    const video = document.getElementById("video");
+    video.srcObject = stream;
+    await video.play();
+    document.getElementById("video-wrap").style.display = "block";
+    camToggle.textContent = "⏹ Matikan Kamera";
+    scanning = true;
+    requestAnimationFrame(scanLoop);
+  }catch(err){
+    alert("Tidak bisa mengakses kamera. Gunakan input kode manual.");
+  }
+});
+function stopCamera(){
+  scanning = false;
+  if(stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
+  document.getElementById("video-wrap").style.display = "none";
+  camToggle.textContent = "📷 Aktifkan Kamera";
+}
+function scanLoop(){
+  if(!scanning) return;
+  const video = document.getElementById("video");
+  if(video.readyState === video.HAVE_ENOUGH_DATA && window.jsQR){
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    const code = jsQR(imgData.data, imgData.width, imgData.height);
+    if(code && code.data){
+      if(navigator.vibrate) navigator.vibrate(120);
+      stopCamera(); // matikan kamera otomatis begitu ada hasil terbaca, valid ataupun tidak
+      checkinCode(code.data.trim().toUpperCase());
+      return; // hentikan loop, kamera sudah nonaktif
+    }
+  }
+  requestAnimationFrame(scanLoop);
+}
+</script>
+</body>
+</html>
