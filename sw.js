@@ -2,7 +2,7 @@
 aplikasi.
 Panggilan ke Apps Script (POST) TIDAK
 boleh di-cache — dilewatkan apa adanya. */
-const CACHE = "fd26-checkin-v1"; //
+const CACHE = "fd26-checkin-v2"; //
 naikkan versi ini setiap kali scanner.html
 diubah
 const SHELL = [
