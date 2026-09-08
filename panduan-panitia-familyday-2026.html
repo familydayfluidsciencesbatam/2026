@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Panitia — Family Day 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --eaton-blue:#0067C6; --harbor-navy:#0A2E4D; --turquoise:#17A6A0; --marigold:#F2A93B;
+    --sand:#FBF6EC; --foam:#FFFFFF; --ink:#0F2A40; --muted:#5C7284; --line:#E3DBC7;
+    --danger:#B3261E; --danger-bg:#FCE8E6; --ok:#1C7A4C; --ok-bg:#E4F5EC;
+    --font-display:'Bricolage Grotesque',system-ui,sans-serif;
+    --font-body:'Plus Jakarta Sans',system-ui,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--sand);color:var(--ink);font-family:var(--font-body);
+    font-size:15px;line-height:1.65;}
+  .wrap{max-width:820px;margin:0 auto;padding:24px 18px 60px;}
+
+  header.top{background:var(--harbor-navy);color:#fff;margin:-24px -18px 24px;padding:32px 18px 26px;}
+  header.top .eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:#8FC4F0;}
+  header.top h1{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1.15;
+    margin:8px 0 6px;}
+  header.top .sub{color:rgba(255,255,255,.72);font-size:14px;}
+
+  h2{font-family:var(--font-display);font-weight:800;font-size:21px;color:var(--harbor-navy);
+    margin:38px 0 4px;padding-top:18px;border-top:2px solid var(--line);}
+  h2 .num{font-family:var(--font-mono);font-size:12px;color:var(--eaton-blue);
+    display:block;letter-spacing:.1em;margin-bottom:4px;}
+  h3{font-family:var(--font-display);font-weight:700;font-size:16px;color:var(--harbor-navy);
+    margin:22px 0 6px;}
+  p{margin:8px 0;}
+
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:9px;margin:18px 0 6px;}
+  .fact{background:var(--foam);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;}
+  .fact .n{font-family:var(--font-display);font-weight:800;font-size:24px;color:var(--harbor-navy);line-height:1.1;}
+  .fact .t{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.04em;color:var(--muted);margin-top:3px;line-height:1.3;}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:var(--foam);}
+  th,td{text-align:left;padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--harbor-navy);color:#fff;font-size:11px;font-family:var(--font-mono);
+    letter-spacing:.05em;text-transform:uppercase;font-weight:600;}
+  td.jam{font-family:var(--font-mono);font-weight:600;white-space:nowrap;color:var(--harbor-navy);}
+  td.pic{font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;}
+
+  .box{border-radius:12px;padding:14px 16px;margin:16px 0;font-size:14px;}
+  .warn{background:var(--danger-bg);border:1.5px solid var(--danger);color:#7A1B16;}
+  .note{background:#FFF4E0;border:1.5px solid var(--marigold);color:#6E4A0C;}
+  .info{background:#EAF3FC;border:1.5px solid var(--eaton-blue);color:#0A4C86;}
+  .good{background:var(--ok-bg);border:1.5px solid var(--ok);color:#14603B;}
+  .box b{font-weight:800;}
+  .box .hd{font-family:var(--font-display);font-weight:800;font-size:15px;margin-bottom:5px;}
+
+  ul,ol{margin:8px 0 8px 20px;padding:0;}
+  li{margin:5px 0;}
+  .checklist{list-style:none;margin-left:0;}
+  .checklist li{padding-left:28px;position:relative;margin:7px 0;}
+  .checklist li::before{content:"";position:absolute;left:0;top:4px;width:16px;height:16px;
+    border:2px solid var(--eaton-blue);border-radius:4px;}
+
+  .team{background:var(--foam);border:1px solid var(--line);border-left:4px solid var(--eaton-blue);
+    border-radius:10px;padding:13px 15px;margin:11px 0;}
+  .team .nm{font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--harbor-navy);margin-bottom:3px;}
+  .team ul{margin:6px 0 0 18px;font-size:14px;}
+
+  .script{background:var(--foam);border-left:4px solid var(--turquoise);padding:11px 14px;
+    margin:10px 0;font-style:italic;color:#245;font-size:14px;border-radius:0 8px 8px 0;}
+
+  footer{margin-top:44px;padding-top:16px;border-top:2px solid var(--line);
+    font-size:12.5px;color:var(--muted);}
+
+  @media print{
+    body{background:#fff;font-size:11pt;}
+    header.top{background:#0A2E4D !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    th{background:#0A2E4D !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .box,.fact,.team,table{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    h2{page-break-after:avoid;} table,.box,.team{page-break-inside:avoid;}
+    .wrap{max-width:none;padding:0;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Panduan Panitia · Dokumen Internal</div>
+  <h1>Family Day 2026</h1>
+  <div class="sub">PT Fluid Sciences Batam · Minggu, 13 September 2026 · Harris Resort Barelang</div>
+</header>
+
+<div class="facts">
+  <div class="fact"><div class="n">261</div><div class="t">KUPON DOORPRIZE</div></div>
+  <div class="fact"><div class="n">261</div><div class="t">KELUARGA HADIR</div></div>
+  <div class="fact"><div class="n">791</div><div class="t">TOTAL ORANG</div></div>
+  <div class="fact"><div class="n">586</div><div class="t">DEWASA 12+</div></div>
+  <div class="fact"><div class="n">130</div><div class="t">ANAK 6–11</div></div>
+  <div class="fact"><div class="n">75</div><div class="t">BALITA 0–5</div></div>
+  <div class="fact"><div class="n">716</div><div class="t">PORSI MAKAN SIANG</div></div>
+</div>
+<p style="font-size:13px;color:var(--muted);margin-top:4px;">
+Dari 267 pendaftar, 261 keluarga menyatakan hadir dan 6 menyatakan tidak hadir.
+Kaos dibagikan ke seluruh 267 pendaftar.</p>
+
+<div class="box warn">
+  <div class="hd">Lima hal yang paling menentukan hari itu</div>
+  <p style="margin-top:2px;"><b>1. Photobooth jangan dijadikan pos wajib saat kedatangan.</b>
+  Gerbang menghasilkan 6 keluarga per menit; satu photobooth hanya 1,5–2 per menit.
+  Kalau wajib dilalui, setelah 45 menit ada ±180 keluarga mengantre di photobooth —
+  antreannya cuma pindah tempat. Buka photobooth <b>sepanjang acara</b>.</p>
+  <p><b>2. Kupon makan siang 716, bukan 791.</b> Balita 0–5 tidak dialokasikan porsi.
+  Jangan bagikan kupon per kepala tanpa kecuali — 75 kupon akan tidak terlayani di antrean makan.</p>
+  <p><b>3. Anak wajib bergelang kode keluarga, pilih yang tahan air.</b> 205 anak di resort
+  tepi laut, dan ada foam party pukul 13:00. Tanpa gelang, anak hilang tidak bisa dikembalikan
+  dengan cepat — dan gelang kertas akan hancur di area busa.</p>
+  <p><b>4. Peserta belum tahu ada foam party dan talent show.</b> Pengumuman pakaian ganti,
+  handuk, dan kantong plastik harus dikirim secepatnya, bukan di hari-H.</p>
+  <p><b>5. Kupon doorprize hanya untuk karyawan — 261 lembar, bukan 791.</b>
+  MC wajib mengumumkan ini di awal acara, kalau tidak anggota keluarga akan bertanya
+  di gerbang kenapa mereka tidak dapat kupon.</p>
+</div>
+
+<h2><span class="num">BAGIAN 1</span>Persiapan Sebelum Hari-H</h2>
+
+<div class="tbl-wrap">
+<table>
+  <tr><th>Tenggat</th><th>Kegiatan</th><th>PIC</th></tr>
+  <tr>
+    <td class="jam">Sel<br>8 Sep</td>
+    <td>Pengecekan rangka photobooth — pastikan lengkap, kuat, dan tidak ada bagian hilang.</td>
+    <td class="pic">Cindy, Robi</td>
+  </tr>
+  <tr>
+    <td class="jam">Sel<br>8 Sep</td>
+    <td>Cetak banner. Catat jumlah akhir yang dicetak — angka ini dibutuhkan Dokumentasi.</td>
+    <td class="pic">Cindy</td>
+  </tr>
+  <tr>
+    <td class="jam">Sel<br>8 Sep</td>
+    <td>Pengambilan kaos dari vendor. <b>Hitung per ukuran saat terima</b>, jangan hanya total.</td>
+    <td class="pic">Logistik</td>
+  </tr>
+  <tr>
+    <td class="jam">Rab<br>9 Sep</td>
+    <td>Distribusi kaos di Pos dekat security PT. Peserta menunjukkan barcode pendaftaran.
+        Petugas memakai <b>Mode Kaos</b> di aplikasi scanner.</td>
+    <td class="pic">Humas, Logistik</td>
+  </tr>
+  <tr>
+    <td class="jam">Rab<br>9 Sep</td>
+    <td>Humas mengingatkan peserta lewat kanal resmi: persiapkan diri, dan
+        <b>hanya membawa anggota keluarga yang terdaftar</b>.</td>
+    <td class="pic">Humas</td>
+  </tr>
+  <tr>
+    <td class="jam">Sab<br>12 Sep<br>12:00</td>
+    <td>Pembuatan photobooth di lokasi sampai selesai, dilanjutkan gladi resik.
+        Panitia difasilitasi makan siang dan makan malam.</td>
+    <td class="pic">Seluruh tim</td>
+  </tr>
+</table>
+</div>
+
+<div class="box note">
+  <div class="hd">Kaos: hitung per ukuran, bukan total</div>
+  <p style="margin-top:2px;">Kebutuhan kaos <b>267 pcs</b>. Data registrasi mencatat satu ukuran
+  yang tidak wajar (tertulis enam huruf X) — hampir pasti salah ketik. Konfirmasi ke karyawan
+  yang bersangkutan sebelum menerima kiriman vendor. Ada juga pendaftar dengan kolom ukuran kosong;
+  aplikasi akan menampilkan peringatan saat kaosnya diserahkan.</p>
+</div>
+
+<h3>Tambahan yang disarankan untuk malam H-1</h3>
+<p>Panitia sudah berada di lokasi dan difasilitasi makan malam. Tiga pekerjaan berikut memakan
+waktu singkat tapi menghemat banyak waktu di pagi hari:</p>
+<ul class="checklist">
+  <li><b>Siapkan gelang anak tahan air</b> bertuliskan kode keluarga untuk 205 anak.
+      Diserahkan di gerbang bersama string bag. Bahan harus tahan air karena ada foam party.</li>
+  <li><b>Tandai dua jalur gerbang</b> dengan papan besar: <b>LAJUR A — nama A sampai L</b> dan <b>LAJUR B — nama M sampai Z</b>. Pembagian ini mencegah satu keluarga menerima barang dua kali saat jaringan mati.</li>
+  <li><b>Buka aplikasi scanner di kedua HP, login, tekan ↻</b> sampai daftar keluarga termuat. Wajib dilakukan saat masih ada sinyal — kalau tidak, aplikasi tidak bisa bekerja offline di Barelang.</li>
+</ul>
+
+<h2><span class="num">BAGIAN 2</span>Rundown Hari-H — Minggu, 13 September</h2>
+
+<div class="tbl-wrap">
+<table>
+  <tr><th>Jam</th><th>Kegiatan</th><th>PIC</th></tr>
+  <tr><td class="jam">05:45</td>
+      <td><b>Gerbang dibuka untuk check-in panitia.</b> Panitia memindai QR miliknya sendiri.
+          Wajib membaca kotak peringatan di Bagian 3 sebelum melakukannya.</td>
+      <td class="pic">Humas</td></tr>
+  <tr><td class="jam">05:45</td>
+      <td><b>Tim Safety &amp; K3 standby.</b> Satu orang di meja registrasi, satu orang mulai
+          patroli keliling. Kotak P3K dipasang di titik yang terlihat.</td>
+      <td class="pic">Safety &amp; K3</td></tr>
+  <tr><td class="jam">06:00</td>
+      <td>Panitia yang tidak bermalam sudah tiba di Harris. Briefing singkat, cek posisi masing-masing tim.</td>
+      <td class="pic">Semua</td></tr>
+  <tr><td class="jam">06:30</td>
+      <td>Gerbang check-in siap: 2 lajur, masing-masing 3 orang. Barang tertata: string bag, snack box,
+          kids snack, kupon makan siang, kupon doorprize, gelang anak. Fish bowl doorprize dipasang.</td>
+      <td class="pic">Humas, Logistik, Konsumsi</td></tr>
+  <tr><td class="jam">07:00</td>
+      <td>Bus peserta tiba di PT.</td>
+      <td class="pic">Logistik</td></tr>
+  <tr><td class="jam">07:00</td>
+      <td>Gerbang <b>dibuka</b> untuk peserta kendaraan pribadi yang datang lebih awal.
+          Melayani lebih awal mengurangi lonjakan saat bus tiba.</td>
+      <td class="pic">Humas</td></tr>
+  <tr><td class="jam">07:30</td>
+      <td>Bus berangkat dari PT menuju Harris.</td>
+      <td class="pic">Logistik</td></tr>
+  <tr><td class="jam">±08:15</td>
+      <td>Bus tiba. Peserta diturunkan dan masuk dari <b>Lobby Harris Resort</b>, diarahkan ke lajur
+          gerbang sesuai huruf awal nama karyawan.</td>
+      <td class="pic">Logistik</td></tr>
+  <tr><td class="jam">08:15</td>
+      <td>MC sudah di panggung. <b>Zumba untuk peserta yang sudah selesai check-in dan photobooth.</b>
+          Check-in dan photobooth <b>tetap berjalan paralel</b> — peserta yang baru tiba
+          tidak perlu menunggu zumba selesai.</td>
+      <td class="pic">MC</td></tr>
+  <tr><td class="jam">08:15<br>–09:15</td>
+      <td>Puncak check-in. Tamu VIP disambut di Lobby oleh Humas, diantar ke meja registrasi
+          oleh Ketua Panitia, lalu duduk bersama di meja VIP.</td>
+      <td class="pic">Humas, Ketua</td></tr>
+  <tr><td class="jam">±09:30</td>
+      <td><b>Sesi pembukaan.</b> Dimulai setelah antrean gerbang bersih dan peserta duduk.</td>
+      <td class="pic">MC, Ketua</td></tr>
+  <tr><td class="jam">09:30<br>–12:00</td>
+      <td><b>Rangkaian lomba, dua jalur paralel.</b><br>
+          Jalur dewasa: 3 lomba berurutan, ±45 menit tiap lomba.<br>
+          Jalur anak sekolah 6–11: 2 lomba berurutan, ±70 menit tiap lomba.<br>
+          Pakai waktu penuh dengan babak penyisihan — jangan selesai lebih awal.</td>
+      <td class="pic">Tim Lomba, MC</td></tr>
+  <tr><td class="jam">11:30</td>
+      <td>Panitia mulai makan siang bergiliran — <b>30 menit sebelum peserta</b>,
+          agar sudah siap menjaga ketertiban antrean. MC didahulukan.</td>
+      <td class="pic">Konsumsi</td></tr>
+  <tr><td class="jam">12:00</td>
+      <td><b>ISHOMA peserta.</b> Konsumsi dan Humas mengatur antrean.
+          Ambil sekeluarga sekaligus.</td>
+      <td class="pic">Konsumsi, Humas</td></tr>
+  <tr><td class="jam">12:45</td>
+      <td>MC mengumumkan talent show dan foam party. Orang tua menyiapkan anak dan
+          menitipkan barang bawaan. Tim Safety &amp; K3 patroli berpindah ke area foam party.</td>
+      <td class="pic">MC, Safety &amp; K3</td></tr>
+  <tr><td class="jam">13:00<br>–14:15</td>
+      <td><b>Talent show</b> di panggung utama — 10 penampilan,
+          <b>maksimal 4 menit tiap penampilan</b>.
+          <b>Undian doorprize diselipkan di sela antar penampilan</b>,
+          dengan tenggat klaim sampai 15:00.<br>
+          Bersamaan di area anak: <b>foam party</b>, ditutup
+          <span style="color:var(--danger);">pukul 14:00</span> — bukan sampai anak selesai sendiri.</td>
+      <td class="pic">MC, Logistik, Safety &amp; K3</td></tr>
+  <tr><td class="jam">14:00<br>–14:30</td>
+      <td>Bilas dan ganti pakaian anak. Humas mengarahkan ke titik ganti.</td>
+      <td class="pic">Humas</td></tr>
+  <tr><td class="jam">14:30</td>
+      <td>MC mulai memanggil peserta untuk <b>foto bersama</b>. Seluruh panitia membantu
+          mengarahkan. <span style="color:var(--danger);">Dimulai 14:30, bukan 14:50.</span></td>
+      <td class="pic">Semua</td></tr>
+  <tr><td class="jam">14:45</td>
+      <td>Foto bersama diambil.</td>
+      <td class="pic">Dokumentasi</td></tr>
+  <tr><td class="jam">14:50</td>
+      <td><b>Doorprize grand prize.</b></td>
+      <td class="pic">MC, Ketua</td></tr>
+  <tr><td class="jam">15:00</td>
+      <td>Kepulangan peserta. Bus sudah berada di Harris. Panitia mulai menyisir area
+          untuk barang tertinggal. Pemenang doorprize masih bisa mengambil hadiah.</td>
+      <td class="pic">Semua</td></tr>
+  <tr><td class="jam">15:30</td>
+      <td>Bus berangkat dari Harris menuju PT, dikawal <b>2 orang Logistik</b>.
+          Panitia lain pulang dengan kendaraan pribadi.</td>
+      <td class="pic">Logistik</td></tr>
+  <tr><td class="jam">15:30<br>–17:00</td>
+      <td>Pembersihan area resort, pendataan properti dan barang temuan.
+          Barang temuan diserahkan ke Tim Safety &amp; K3.
+          Tenaga: seluruh panitia <b>dikurangi 2 orang Logistik</b> yang mengawal bus.
+          Semua pulang dengan <b>kendaraan pribadi</b>.</td>
+      <td class="pic">Semua</td></tr>
+  <tr><td class="jam">17:00</td>
+      <td>Panitia pulang.</td>
+      <td class="pic">Semua</td></tr>
+</table>
+</div>
+
+<div class="box good">
+  <div class="hd">Transportasi panitia sudah beres</div>
+  <p style="margin-top:2px;">Seluruh panitia berangkat dan pulang dengan <b>kendaraan pribadi</b>,
+  kecuali <b>2 orang Logistik</b> yang mengawal bus peserta. Kedua orang itu berangkat bersama bus
+  pukul 15:30, jadi <b>tidak ikut pembersihan</b> — tenaga pembersihan adalah total panitia
+  dikurangi dua.</p>
+</div>
+
+<h2><span class="num">BAGIAN 3</span>Alur Peserta di Gerbang</h2>
+
+<p>Dua lajur, masing-masing <b>tiga orang</b> dengan peran terpisah — sudah terpenuhi.
+Inilah yang membuat antrean 261 keluarga bisa selesai dalam waktu yang tersedia:
+hanya pemindaian yang berurutan, penyiapan barang berjalan paralel.</p>
+
+<div class="tbl-wrap">
+<table>
+  <tr><th>Peran</th><th>Tugas</th></tr>
+  <tr><td class="pic"><b>Pemindai</b></td>
+      <td>Pegang HP scanner. Pindai QR e-tiket, centang anggota yang benar-benar hadir,
+          tekan Konfirmasi, sebutkan isi struk dengan lantang. Langsung lanjut ke keluarga berikutnya.</td></tr>
+  <tr><td class="pic"><b>Penyiap 1</b></td>
+      <td>Menyiapkan string bag, snack box, dan kids snack sesuai yang disebutkan Pemindai.
+          Bekerja satu keluarga di belakang.</td></tr>
+  <tr><td class="pic"><b>Penyiap 2</b></td>
+      <td>Menyerahkan kupon makan siang (<b>sesuai jumlah di layar, balita tidak dapat</b>),
+          <b>satu kupon doorprize untuk karyawan saja</b>, dan gelang anak tahan air.
+          Mengarahkan peserta ke fish bowl.</td></tr>
+</table>
+</div>
+
+<h3>Urutan yang dilalui peserta</h3>
+<ol>
+  <li>Turun di Lobby, diarahkan tim Logistik ke lajur sesuai huruf awal nama karyawan.</li>
+  <li>Pindai QR di gerbang, konfirmasi anggota yang hadir.</li>
+  <li>Terima string bag, snack box, kids snack (bila ada), kupon makan siang
+      (<b>balita tidak dapat</b>), satu kupon doorprize untuk karyawan, dan gelang anak tahan air.</li>
+  <li>Masukkan kupon doorprize ke <b>fish bowl</b>.</li>
+  <li>Menuju tempat duduk yang telah disediakan, atau langsung ke zumba.</li>
+  <li><b>Photobooth kapan saja sepanjang acara</b> — bukan pos wajib yang harus dilalui saat datang.</li>
+</ol>
+
+<div class="box warn">
+  <div class="hd">Kenapa photobooth tidak boleh jadi pos wajib</div>
+  <p style="margin-top:2px;">Dua lajur gerbang menghasilkan <b>6 keluarga per menit</b>.
+  Satu photobooth memproses <b>1,5–2 keluarga per menit</b>. Selisihnya menumpuk
+  4 keluarga setiap menit.</p>
+  <p>Kalau photobooth dijadikan pos wajib dalam alur kedatangan, setelah 30 menit ada
+  ±120 keluarga mengantre, setelah 45 menit ±180. Antrean tidak hilang, hanya pindah dari
+  gerbang ke photobooth — dan kali ini tanpa aplikasi yang bisa membantu.</p>
+  <p style="margin-bottom:2px;">Agar seimbang dengan gerbang perlu <b>3–4 booth</b>.
+  Kalau hanya ada satu, buka <b>sepanjang acara</b>: total jendela waktu 480 menit memberi
+  kapasitas 576–960 keluarga, jauh di atas 261 yang dibutuhkan. MC mengingatkan berkala
+  bahwa photobooth masih terbuka.</p>
+</div>
+
+<div class="box info">
+  <div class="hd">Yang harus dipahami petugas gerbang</div>
+  <p style="margin-top:2px;"><b>Aplikasi yang memutuskan, bukan ingatan.</b> Layar menampilkan
+  persis apa yang harus diserahkan. Jangan menambah atau mengurangi berdasarkan perkiraan.</p>
+  <p><b>Kartu kuning "Sudah check-in" berarti stop.</b> Jangan serahkan barang lagi.
+  Kalau ada anggota yang menyusul, gunakan tombol <b>+ Anggota Susulan</b> — struk akan
+  menampilkan selisihnya saja.</p>
+  <p><b>Kartu "Keluarga ini Lajur lain" berarti antar ke lajur sebelah.</b>
+  Jangan dilayani di lajur ini. Petugas tidak bisa memastikan keluarga itu belum dilayani di sana.</p>
+  <p><b>Badge ⏳ di kanan atas itu normal.</b> Artinya data tersimpan di HP dan menunggu sinyal.
+  Jangan tutup tab dan jangan bersihkan data browser.</p>
+</div>
+
+<div class="box warn">
+  <div class="hd">Check-in panitia 05:45 — jangan centang seluruh keluarga</div>
+  <p style="margin-top:2px;">Layar Tinjau <b>mencentang semua anggota keluarga secara otomatis</b>.
+  Kalau panitia menekan Konfirmasi begitu saja pukul 05:45, sistem mencatat seluruh keluarganya
+  sudah hadir dan menyerahkan string bag, snack box, kids snack, serta kupon untuk semuanya —
+  padahal keluarganya baru datang naik bus pukul 08:15.</p>
+  <p>Akibatnya saat keluarga tiba dan memindai QR, yang muncul kartu kuning
+  <b>"Sudah check-in"</b> dan mereka tidak bisa dilayani.</p>
+  <p><b>Yang benar:</b> panitia membuka centang semua anggota keluarga, sisakan hanya dirinya
+  sendiri, lalu Konfirmasi. Struk akan menampilkan 1 orang.
+  Saat keluarga tiba, pindai lagi QR yang sama dan gunakan tombol
+  <b>+ Anggota Susulan</b> — struk hanya menampilkan selisihnya, dan barang diserahkan saat itu.</p>
+  <p style="margin-bottom:2px;">Tim Safety &amp; K3 <b>campuran</b>: sebagian karyawan Harris Resort,
+  sebagian karyawan PT. Yang karyawan PT <b>punya QR, tetap check-in, dan terhitung dalam 716 porsi</b>.
+  Yang karyawan Harris tidak punya QR dan tidak masuk hitungan konsumsi.</p>
+</div>
+
+<h2><span class="num">BAGIAN 4</span>Rangkaian Lomba</h2>
+
+<p><b>Lima lomba, dua jalur paralel.</b> Jalur dewasa 3 lomba, jalur anak sekolah 6–11 dua lomba.
+Di dalam masing-masing jalur, lomba berjalan berurutan satu per satu.</p>
+
+<div class="tbl-wrap">
+<table>
+  <tr><th>Jalur</th><th>Jumlah lomba</th><th>Durasi tiap lomba</th><th>Selesai</th></tr>
+  <tr><td class="pic"><b>Dewasa 12+</b></td><td>3 lomba</td><td class="jam">±45 menit</td><td class="jam">11:45</td></tr>
+  <tr><td class="pic"><b>Anak sekolah 6–11</b></td><td>2 lomba</td><td class="jam">±70 menit</td><td class="jam">11:00</td></tr>
+</table>
+</div>
+
+<div class="box note">
+  <div class="hd">Pakai waktu penuh — jangan selesai lebih awal</div>
+  <p style="margin-top:2px;">Jendela lomba 09:30–12:00 adalah <b>150 menit</b>. Kalau tiap lomba
+  hanya 20 menit, jalur dewasa selesai 10:30 dan jalur anak 10:10 — meninggalkan
+  <b>celah kosong 90 menit</b> sebelum ISHOMA, dan peserta akan bosan atau bubar.</p>
+  <p>Perpanjang tiap lomba dengan <b>babak penyisihan</b>, jangan tambah jumlah lomba.
+  Hasilnya jauh lebih banyak orang yang ikut bermain:</p>
+  <ul style="margin-top:6px;">
+    <li><b>Anak sekolah:</b> 70 menit per lomba muat 110–150 slot. Karena anak sekolah hanya
+        130 orang, <b>hampir semuanya bisa ikut</b> setidaknya satu lomba.</li>
+    <li><b>Dewasa:</b> 45 menit per lomba muat 66–99 slot. Tiga lomba menjangkau
+        200–300 dari 586 orang dewasa.</li>
+  </ul>
+  <p style="margin-bottom:2px;">Bandingkan dengan format enam lomba berurutan yang hanya
+  menampung sekitar 70 orang. Format paralel ini jauh lebih baik — asalkan waktunya dipakai.</p>
+</div>
+
+<h3>Pendaftaran peserta lomba</h3>
+<ul class="checklist">
+  <li><b>Meja pendaftaran lomba</b> dekat area duduk, aktif sejak check-in sampai 09:30.</li>
+  <li>Papan berisi lima kolom lomba beserta jamnya dan sisa slot per babak.</li>
+  <li><b>Petugas memeriksa benturan jadwal.</b> Karena dua jalur berjalan paralel, satu keluarga
+      bisa terdaftar di dua lomba yang bersamaan. Cukup dicentang manual di papan.</li>
+  <li>Jangan memanggil peserta dari panggung — itu memancing kerumunan dan memakan waktu.</li>
+</ul>
+
+<div class="box warn">
+  <div class="hd">Balita 0–5 tidak punya lomba</div>
+  <p style="margin-top:2px;">Kedua lomba anak khusus untuk anak sekolah 6–11. Ada <b>75 balita</b>
+  yang tidak mendapat lomba apa pun; aktivitas mereka hanya foam party pukul 13:00.</p>
+  <p style="margin-bottom:2px;">Umumkan hal ini sejak awal acara agar orang tua tidak menunggu
+  lomba balita yang memang tidak ada, dan tidak protes di meja pendaftaran lomba.</p>
+</div>
+
+<h2><span class="num">BAGIAN 5</span>Makan Siang</h2>
+
+<p>Porsi yang dipesan <b>716</b>, dari 791 orang hadir. Balita 0–5 tidak dialokasikan porsi
+karena tidak ditagihkan ke Harris.</p>
+
+<div class="box warn">
+  <div class="hd">75 balita tetap akan makan</div>
+  <p style="margin-top:2px;">Mereka hadir di lokasi dan akan makan dari porsi orang tuanya.
+  Petugas Konsumsi akan menghadapi orang tua yang meminta porsi untuk anak usia 4 tahun.
+  Sikap panitia harus disepakati <b>sebelum</b> antrean terbentuk, bukan diputuskan di tempat
+  oleh masing-masing petugas.</p>
+</div>
+
+<h3>Aturan pengambilan</h3>
+<ul class="checklist">
+  <li>Ambil makan siang <b>bersama keluarga</b>, tidak terpisah — memudahkan pendataan.</li>
+  <li>Tidak diperkenankan mengambil dua kali. Konsumsi terbatas.</li>
+  <li>Kembalikan piring ke tempat yang telah disediakan setelah makan.</li>
+  <li>Jangan buang sampah sembarangan. Jaga kebersihan dan barang bawaan masing-masing.</li>
+</ul>
+
+<h3>Kalimat yang bisa dipakai panitia</h3>
+<div class="script">"Mohon diambil sekeluarga sekaligus ya Pak/Bu, supaya pendataannya cepat.
+Satu porsi per orang, konsumsinya terbatas. Piring dikembalikan ke meja sebelah setelah makan.
+Terima kasih."</div>
+
+<h2><span class="num">BAGIAN 6</span>Foam Party — 13:00</h2>
+
+<div class="box warn">
+  <div class="hd">Peserta belum diberi tahu membawa pakaian ganti</div>
+  <p style="margin-top:2px;">Pengingat Humas tanggal 9 September berisi soal membawa anggota
+  keluarga terdaftar, belum menyebut foam party. Anak-anak akan basah kuyup pukul 13:00 dan
+  naik bus pulang pukul 15:30.</p>
+  <p style="margin-bottom:2px;"><b>Perlu pengumuman kedua, terpisah dan segera:</b> bawa pakaian
+  ganti untuk anak, handuk, dan kantong plastik untuk pakaian basah.</p>
+</div>
+
+<h3>Batas usia</h3>
+<p>Busa membuat permukaan licin dan dapat mengiritasi mata. Anak yang belum kokoh berjalan
+tidak sebaiknya masuk area busa.</p>
+<ul class="checklist">
+  <li><b>Usia 4 tahun ke atas</b> boleh masuk area busa.</li>
+  <li><b>Usia di bawah 4 tahun</b> hanya di pinggir area, digandeng orang tua — atau disediakan
+      area busa tipis terpisah bila memungkinkan.</li>
+  <li>Setiap anak yang masuk area busa <b>tetap memakai gelang kode keluarga.</b>
+      Pilih gelang yang tahan air.</li>
+</ul>
+
+<h3>Yang harus disiapkan</h3>
+<ul class="checklist">
+  <li><b>Titik bilas dan ganti pakaian</b> — konfirmasi ke Harris ruang mana yang boleh dipakai,
+      dan pastikan terpisah untuk laki-laki dan perempuan.</li>
+  <li><b>Jarak aman dari perangkat listrik.</b> Sound system, panggung, dan kabel harus jauh
+      dari area busa dan jalur air.</li>
+  <li><b>Alas anti-licin atau area berumput</b>, bukan lantai keramik.</li>
+  <li><b>Pelindung kamera</b> untuk tim Dokumentasi. Busa dan air merusak lensa.</li>
+  <li><b>Kantong plastik</b> di dekat titik ganti untuk pakaian basah — mencegah kursi bus basah
+      dan barang bawaan peserta rusak.</li>
+  <li><b>Tim Safety &amp; K3 menetap di area busa</b> pukul 12:45–14:00. Ini titik risiko
+      tertinggi sepanjang acara: permukaan licin, anak banyak, orang tua sebagian di pinggir.</li>
+  <li><b>Jam tutup tegas pukul 14:00</b>, diumumkan MC pada 13:45 sebagai peringatan 15 menit.
+      Anak tidak akan berhenti sendiri, dan foto bersama pukul 14:45 menuntut mereka sudah
+      bersih dan berganti.</li>
+</ul>
+
+<div class="box info">
+  <div class="hd">Talent show dan foam party berjalan bersamaan</div>
+  <p style="margin-top:2px;">Keduanya mulai pukul 13:00 di area berbeda — talent show di panggung
+  utama, foam party di area anak. Ini bisa berjalan, tapi menuntut dua hal:
+  <b>Dokumentasi harus terbagi</b> (satu di panggung, satu di area busa dengan pelindung kamera),
+  dan <b>tim Lomba serta Humas tidak boleh semuanya di panggung</b> karena area busa perlu
+  pengawasan orang dewasa selain Safety &amp; K3.</p>
+  <p style="margin-bottom:2px;">Konsekuensi lain: orang tua yang anaknya ikut foam party
+  tidak akan menonton talent show. Kalau ada peserta talent show yang anaknya di area busa,
+  atur urutan tampilnya di awal atau akhir.</p>
+</div>
+
+<h2><span class="num">BAGIAN 7</span>Tugas per Tim</h2>
+
+<div class="team">
+  <div class="nm">Humas</div>
+  <ul>
+    <li>Pengingat ke peserta H-4: persiapan diri, dan hanya membawa anggota keluarga yang terdaftar.</li>
+    <li>Distribusi kaos 9 September bersama Logistik.</li>
+    <li>Mengoperasikan dua gerbang check-in.</li>
+    <li>Menyambut tamu VIP saat turun dari kendaraan di Lobby.</li>
+    <li>Bersama Konsumsi mengatur ketertiban antrean makan siang.</li>
+    <li><b>Pengumuman kedua ke peserta:</b> bawa pakaian ganti anak, handuk, dan kantong plastik
+        untuk foam party. Kirim secepatnya, jangan menunggu hari-H.</li>
+    <li>Mengarahkan peserta ke titik bilas dan ganti pakaian setelah foam party.</li>
+  </ul>
+</div>
+
+<div class="team">
+  <div class="nm">Logistik</div>
+  <ul>
+    <li>Pengambilan kaos dari vendor 8 September — hitung per ukuran saat terima.</li>
+    <li>Distribusi kaos 9 September bersama Humas.</li>
+    <li>Pengaturan bus: tiba di PT 07:00, berangkat 07:30, pulang berangkat 15:30.</li>
+    <li>Mengarahkan peserta dari Lobby ke lajur gerbang sesuai huruf awal nama.</li>
+    <li>Menyiapkan barang di gerbang bersama Konsumsi.</li>
+    <li>Menyiapkan area foam party: mesin busa, sumber air, alas anti-licin,
+        dan jarak aman dari perangkat listrik.</li>
+    <li>Menyediakan kantong plastik di titik ganti pakaian.</li>
+  </ul>
+</div>
+
+<div class="team">
+  <div class="nm">Konsumsi</div>
+  <ul>
+    <li>Snack box 586, kids snack 205, makan siang 716 — cocokkan dengan kiriman vendor saat tiba.</li>
+    <li>Makan siang panitia bergiliran mulai ±11:00, terutama MC.</li>
+    <li>Mengatur ketertiban antrean makan siang bersama Humas.</li>
+    <li>Memastikan piring kembali ke tempat yang disediakan.</li>
+  </ul>
+</div>
+
+<div class="team">
+  <div class="nm">Dokumentasi</div>
+  <ul>
+    <li><b>Foto seluruh properti yang dibeli dengan uang perusahaan, sesuai jumlahnya.</b>
+        Banner 5 pcs difoto kelima-limanya. Begitu untuk setiap item.</li>
+    <li>Menjaga photobooth <b>sepanjang acara</b>, bukan hanya saat kedatangan.
+        Beban kerja jadi tersebar, bukan menumpuk di 45 menit pertama.</li>
+    <li>Video dokumenter acara.</li>
+    <li>Dokumentasi kedatangan dan sambutan tamu VIP.</li>
+    <li>Foam party — <b>gunakan pelindung kamera.</b> Busa dan air merusak lensa.</li>
+  </ul>
+</div>
+
+<div class="team">
+  <div class="nm">Tim Lomba</div>
+  <ul>
+    <li>Menjaga meja pendaftaran lomba sejak check-in sampai 09:30, dengan papan sisa slot.</li>
+    <li>Mengarahkan peserta ke area lomba setelah sesi pembukaan.</li>
+    <li>Menjalankan enam lomba berurutan sesuai jadwal, menjaga setiap lomba tidak melewati alokasi waktunya.</li>
+  </ul>
+</div>
+
+<div class="team">
+  <div class="nm">MC</div>
+  <ul>
+    <li>Sudah di panggung <b>08:15</b>.</li>
+    <li>Memandu senam zumba sampai peserta selesai check-in.</li>
+    <li>Mengumumkan titik kumpul anak hilang dan aturan konsumsi di awal acara.</li>
+    <li>Pukul <b>12:45</b> mengumumkan foam party dan meminta orang tua menyiapkan anak
+        serta menitipkan barang bawaan.</li>
+    <li>Mengumumkan batas usia area busa: 4 tahun ke atas.</li>
+    <li>Memandu talent show: <b>10 penampilan, maksimal 4 menit masing-masing</b>.
+        Undian doorprize diselipkan di sela antar penampilan.</li>
+    <li>Mengingatkan berkala bahwa photobooth masih terbuka.</li>
+    <li>Memandu pembukaan, lomba, foam party, undian doorprize, ISHOMA, dan penutupan.</li>
+    <li>Makan siang lebih awal saat peserta masih berlomba.</li>
+  </ul>
+</div>
+
+<div class="team">
+  <div class="nm">Safety &amp; K3 <span style="font-family:var(--font-mono);font-size:10px;font-weight:400;color:var(--muted);">KARYAWAN PT + HARRIS RESORT</span></div>
+  <ul>
+    <li>Standby sejak <b>05:45</b> sampai pembersihan selesai pukul 17:00.</li>
+    <li><b>Satu orang di meja registrasi</b> — titik yang paling mudah dicari peserta.
+        Memegang kotak P3K, menerima laporan anak terpisah dan barang temuan.</li>
+    <li><b>Satu orang patroli keliling</b> dengan rute tetap, kembali ke meja registrasi
+        setiap 30 menit untuk lapor kondisi.</li>
+    <li>Prioritas patroli: <b>area air</b> (pantai, kolam), photobooth, area lomba,
+        dan jalur antara area duduk dan toilet.</li>
+    <li>Briefing singkat ke seluruh panitia pukul 06:00: lokasi kotak P3K, titik kumpul anak,
+        dan nomor kontak yang dihubungi saat kejadian.</li>
+    <li><b>Pukul 12:45 berpindah ke area foam party</b> dan menetap di sana sampai 14:00.
+        Ini titik risiko tertinggi sepanjang acara.</li>
+    <li>Berkoordinasi mengenai tenaga medis siaga dan jalur evakuasi.</li>
+    <li><b>Menerima barang temuan</b> saat penyisiran area pukul 15:30–17:00.</li>
+  </ul>
+  <p style="font-size:13px;color:var(--muted);margin:8px 0 0;">
+  Karena tim ini campuran, anggota dari Harris <b>wajib ikut briefing pukul 06:00</b> agar tahu
+  arti gelang kode keluarga dan lokasi titik kumpul anak. Sepakati juga <b>jalur eskalasi</b>:
+  saat kejadian, lapor ke Ketua Panitia atau ke manajemen Harris lebih dulu.</p>
+</div>
+
+<div class="team">
+  <div class="nm">Ketua Panitia</div>
+  <ul>
+    <li>Mengantar tamu VIP dari Lobby ke meja registrasi, lalu duduk bersama di meja VIP.</li>
+    <li>Memegang keputusan atas kejadian di luar rencana.</li>
+  </ul>
+</div>
+
+<h2><span class="num">BAGIAN 8</span>Keselamatan</h2>
+
+<div class="box note">
+  <div class="hd">205 anak di resort tepi laut</div>
+  <p style="margin-top:2px;">75 balita dan 130 anak usia sekolah, dengan sebagian orang tua
+  sedang ikut atau menonton lomba. <b>Tim Safety &amp; K3 memegang tanggung jawab ini:</b>
+  satu orang menetap di meja registrasi sebagai titik lapor, satu orang patroli keliling
+  dengan prioritas area air.</p>
+  <p style="margin-bottom:2px;">Empat perlengkapan berikut murah dan disiapkan malam H-1.</p>
+</div>
+
+<ul class="checklist">
+  <li><b>Gelang kode keluarga</b> untuk setiap anak, diserahkan di gerbang. Kalau anak terpisah,
+      kode itu langsung menunjuk ke nama karyawan di aplikasi scanner.</li>
+  <li><b>Satu titik kumpul</b> yang diumumkan MC di awal acara dan diulang setelah ISHOMA.
+      Pilih tempat yang terlihat dari mana saja, misalnya dekat panggung.</li>
+  <li><b>Satu nomor kontak</b> yang dihafal semua tim — pegang Tim Safety &amp; K3 di meja
+      registrasi, yang sekaligus penanggung jawab barang temuan dan anak terpisah.</li>
+  <li><b>Kotak P3K di meja registrasi</b>, dipegang Tim Safety &amp; K3 dan diumumkan MC
+      lokasinya di awal acara. Konfirmasi juga ke pihak Harris apakah mereka menyediakan
+      tenaga medis siaga.</li>
+  <li><b>Rencana kalau hujan.</b> Photobooth, zumba, dan lomba semuanya di luar ruangan.
+      September masih musim hujan di Batam. Pastikan ada area berteduh yang disepakati dengan Harris.</li>
+</ul>
+
+<h2><span class="num">BAGIAN 9</span>Keputusan yang Masih Terbuka</h2>
+
+<p>Sembilan hal berikut belum ditentukan dan sebaiknya diputuskan dalam rapat panitia terakhir,
+bukan di hari-H. Nomor 1 dan 2 punya tenggat lebih cepat karena menyangkut hal yang harus
+dicetak atau diumumkan.</p>
+
+<div class="tbl-wrap">
+<table>
+  <tr><th>No</th><th>Keputusan</th><th>Kenapa penting</th></tr>
+  <tr><td class="jam">1</td><td>Jenis lima lomba dan susunan babak penyisihannya</td>
+      <td>Tim Lomba butuh kepastian untuk menyiapkan alat dan mengisi 150 menit penuh.</td></tr>
+  <tr><td class="jam">2</td><td>Pengumuman pakaian ganti untuk foam party</td>
+      <td><b>Paling mendesak.</b> Peserta belum tahu ada foam party. Tanpa pakaian ganti,
+          anak naik bus dalam keadaan basah.</td></tr>
+  <tr><td class="jam">3</td><td>Batas usia area busa dan lokasi titik bilas</td>
+      <td>Perlu konfirmasi ke Harris ruang mana yang boleh dipakai untuk ganti pakaian.</td></tr>
+  <tr><td class="jam">4</td><td>Susunan 10 penampil talent show dan batas waktunya</td>
+      <td>75 menit hanya muat 10 penampilan bila tiap penampilan maksimal 4 menit —
+          di luar itu undian doorprize tidak kebagian waktu. Peserta yang anaknya
+          di area busa sebaiknya tampil di awal atau akhir.</td></tr>
+  <tr><td class="jam">5</td><td>Jumlah photobooth yang tersedia</td>
+      <td>Kalau hanya satu, wajib dibuka sepanjang acara dan bukan pos kedatangan.</td></tr>
+  <tr><td class="jam">4</td><td>Transportasi panitia pembersihan</td>
+      <td>Bus terakhir 15:30, pembersihan selesai 17:00.</td></tr>
+  <tr><td class="jam">5</td><td>Sikap atas balita yang meminta porsi makan siang</td>
+      <td>75 anak. Harus seragam antar petugas.</td></tr>
+  <tr><td class="jam">6</td><td>Jenis dan kuota final enam lomba</td>
+      <td>Tim Lomba butuh kepastian untuk menyiapkan alat.</td></tr>
+  <tr><td class="jam">7</td><td>Siapa tamu VIP dan perkiraan jam kedatangan</td>
+      <td>Kalau bersamaan puncak check-in, Ketua Panitia terbagi perhatian.</td></tr>
+  <tr><td class="jam">8</td><td>Susunan dan durasi sesi pembukaan</td>
+      <td>Menentukan apakah lomba bisa mulai 09:30.</td></tr>
+  <tr><td class="jam">9</td><td>Jalur eskalasi Safety &amp; K3 Harris</td>
+      <td>Mereka karyawan Harris, bukan panitia. Saat kejadian, lapor ke Ketua Panitia
+          atau manajemen Harris lebih dulu?</td></tr>
+</table>
+</div>
+
+<div class="box good">
+  <div class="hd">Sudah beres dan tidak perlu dibahas lagi</div>
+  <p style="margin-top:2px;">Jumlah peserta dan komposisi usia sudah terverifikasi dari data registrasi.
+  Angka tagihan ke Harris sudah dihitung. Aplikasi check-in sudah diuji untuk bekerja tanpa sinyal,
+  menolak penyerahan barang dua kali, dan mencatat anggota yang menyusul. Data kaos per ukuran sudah lengkap.</p>
+</div>
+
+<footer>
+  Panduan Panitia Family Day 2026 · PT Fluid Sciences Batam<br>
+  Angka peserta bersumber dari data registrasi per 7 September 2026.
+  Bagian yang ditandai sebagai usulan atau belum final perlu disahkan dalam rapat panitia terakhir.
+</footer>
+
+</div>
+</body>
+</html>
