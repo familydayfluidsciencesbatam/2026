@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring Logistik — Family Day 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --eaton-blue:#0067C6;
+    --eaton-blue-dark:#004E96;
+    --harbor-navy:#0A2E4D;
+    --turquoise:#17A6A0;
+    --turquoise-dark:#0E7F7A;
+    --marigold:#F2A93B;
+    --marigold-dark:#D98F1F;
+    --sand:#FBF6EC;
+    --foam:#FFFFFF;
+    --ink:#0F2A40;
+    --muted:#5C7284;
+    --line:#E3DBC7;
+    --radius:20px;
+    --shadow:0 16px 40px -18px rgba(10,46,77,.35);
+    --font-display:'Bricolage Grotesque', system-ui, sans-serif;
+    --font-body:'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--sand);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:var(--font-display);margin:0;letter-spacing:-.01em;}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:3px solid var(--marigold);outline-offset:3px;border-radius:4px;}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(251,246,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .nav-title{font-family:var(--font-display);font-weight:800;font-size:16px;color:var(--harbor-navy);}
+  .nav-title span{color:var(--marigold-dark);}
+  .badge-readonly{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 10px;}
+  .nav-badges{display:flex;align-items:center;gap:8px;}
+  .badge-net{font-family:var(--font-mono);font-size:11px;font-weight:700;border-radius:999px;padding:4px 10px;display:flex;align-items:center;gap:5px;}
+  .badge-net.online{color:#1C7A4C;border:1px solid #A9DFC0;background:#E4F5EC;}
+  .badge-net.offline{color:#8C1D18;border:1px solid #F3B7B1;background:#FCE8E6;}
+  .badge-net .dot{width:7px;height:7px;border-radius:50%;background:currentColor;}
+
+  .offline-banner{display:none;background:#FFF7E6;border:1px solid #F2D9A6;color:#7A5A15;border-radius:14px;padding:12px 16px;font-size:13px;font-weight:600;margin-bottom:18px;}
+  .offline-banner.show{display:block;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px;}
+
+  /* ---------- login gate ---------- */
+  .login-card{background:var(--foam);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px 32px;max-width:380px;margin:60px auto 0;text-align:center;}
+  .login-card .icon{font-size:34px;margin-bottom:10px;}
+  .login-card h1{font-size:22px;color:var(--harbor-navy);margin-bottom:6px;}
+  .login-card p{color:var(--muted);font-size:14px;margin:0 0 22px;}
+  .field{margin-bottom:16px;text-align:left;}
+  .field label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;font-family:var(--font-mono);letter-spacing:.03em;}
+  .input{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;font-size:16px;font-family:inherit;background:var(--sand);color:var(--ink);}
+  .input:focus{border-color:var(--eaton-blue);outline:none;}
+  .btn-primary{width:100%;background:var(--harbor-navy);color:var(--foam);border:none;border-radius:12px;padding:14px;font-weight:700;font-size:15px;}
+  .btn-primary:disabled{opacity:.6;}
+  .msg-err{margin-top:12px;font-size:13px;color:#B3261E;font-weight:600;display:none;}
+  .msg-err.show{display:block;}
+
+  /* ---------- dashboard ---------- */
+  #dashboard{display:none;}
+  .dash-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px;}
+  .dash-header h1{font-size:24px;color:var(--harbor-navy);}
+  .dash-actions{display:flex;align-items:center;gap:10px;}
+  .last-updated{font-family:var(--font-mono);font-size:11px;color:var(--muted);}
+  .btn-ghost{background:var(--foam);border:1.5px solid var(--line);color:var(--harbor-navy);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;}
+  .btn-ghost:hover{border-color:var(--eaton-blue);}
+  .btn-logout{background:none;border:1.5px solid #B3261E;color:#B3261E;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;}
+
+  .headline-card{background:var(--harbor-navy);color:var(--foam);border-radius:var(--radius);padding:26px 28px;margin-bottom:20px;box-shadow:var(--shadow);}
+  .headline-card .label{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--marigold);margin-bottom:6px;}
+  .headline-row{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;}
+  .headline-num{font-family:var(--font-display);font-size:52px;font-weight:800;line-height:1;}
+  .headline-of{font-size:15px;color:rgba(255,255,255,.7);}
+  .headline-sub{margin-top:10px;display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.75);}
+  .progress-track{margin-top:14px;height:8px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden;}
+  .progress-fill{height:100%;background:var(--marigold);border-radius:999px;transition:width .4s ease;}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media (max-width:520px){ .grid{grid-template-columns:1fr;} }
+  .logi-card{background:var(--foam);border:1px solid var(--line);border-radius:16px;padding:20px;}
+  .logi-card .icon{font-size:22px;}
+  .logi-card .name{font-family:var(--font-mono);font-size:12px;color:var(--muted);margin-top:8px;letter-spacing:.02em;}
+  .logi-card .num{font-family:var(--font-display);font-size:34px;font-weight:800;color:var(--harbor-navy);margin-top:2px;}
+  .logi-card .of-total{font-size:12px;color:var(--muted);margin-top:4px;}
+
+  .assumption-note{margin-top:22px;background:#FFF7E6;border:1px solid #F2D9A6;border-radius:14px;padding:14px 18px;font-size:12.5px;color:#7A5A15;line-height:1.6;}
+  .assumption-note b{color:#5C4210;}
+
+  .breakdown{margin-top:24px;background:var(--foam);border:1px solid var(--line);border-radius:16px;padding:18px 20px;}
+  .breakdown h3{font-size:15px;color:var(--harbor-navy);margin-bottom:12px;}
+  .bd-row{display:flex;justify-content:space-between;padding:8px 0;font-size:14px;border-bottom:1px solid var(--line);}
+  .bd-row:last-child{border-bottom:none;}
+  .bd-row .k{color:var(--muted);}
+  .bd-row .v{font-weight:700;color:var(--harbor-navy);font-family:var(--font-mono);}
+
+  .empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
+
+  .search-card{background:var(--foam);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:24px;}
+  .search-card h3{font-size:15px;color:var(--harbor-navy);margin-bottom:14px;}
+  .family-results{margin-top:16px;display:grid;gap:10px;}
+  .family-result-card{background:var(--sand);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .family-result-card .name{font-weight:800;color:var(--harbor-navy);font-size:15px;}
+  .family-result-card .status{font-size:12px;color:var(--muted);margin-top:2px;}
+  .family-logi-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--ink);}
+  .family-logi-row .item{display:flex;align-items:center;gap:5px;}
+  .family-logi-row .item b{font-family:var(--font-mono);color:var(--harbor-navy);font-size:14px;}
+</style>
+</head>
+<body>
+
+  <div class="nav">
+    <div class="nav-title">🍱 Monitoring Logistik <span>· Family Day 2026</span></div>
+    <div class="nav-badges">
+      <div class="badge-net" id="network-badge"><span class="dot"></span><span id="network-badge-text">Memeriksa...</span></div>
+      <div class="badge-readonly">read-only · bukan check-in</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ===================== LOGIN GATE ===================== -->
+    <div id="login-view" class="login-card">
+      <div class="icon">🔒</div>
+      <h1>Login Panitia</h1>
+      <p>Pakai PIN yang sama dengan scanner check-in gerbang.</p>
+      <div class="field">
+        <label for="pin-input">PIN</label>
+        <input class="input" type="password" id="pin-input" inputmode="numeric" autocomplete="off">
+      </div>
+      <button class="btn-primary" id="login-btn">Masuk</button>
+      <div class="msg-err" id="login-msg"></div>
+    </div>
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <div id="dashboard">
+      <div class="dash-header">
+        <h1>Monitoring Logistik</h1>
+        <div class="dash-actions">
+          <span class="last-updated" id="last-updated">—</span>
+          <button class="btn-ghost" id="refresh-btn">🔄 Refresh</button>
+          <button class="btn-logout" id="logout-btn">Keluar</button>
+        </div>
+      </div>
+
+      <div class="offline-banner" id="offline-banner"></div>
+
+      <div class="headline-card">
+        <div class="label">Anggota Keluarga yang Dibawa (sudah check-in)</div>
+        <div class="headline-row">
+          <div class="headline-num" id="stat-members-checkedin">0</div>
+          <div class="headline-of">dari <span id="stat-members-total">0</span> anggota keluarga terdaftar</div>
+        </div>
+        <div class="headline-sub">
+          <span>👨‍👩‍👧 <b id="stat-families-checkedin">0</b> / <span id="stat-families-total">0</span> keluarga sudah check-in</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+
+      <div class="grid">
+        <div class="logi-card">
+          <div class="icon">🍱</div>
+          <div class="name">LUNCH</div>
+          <div class="num" id="stat-lunch">0</div>
+          <div class="of-total">dari <span id="stat-lunch-total">0</span> total terdaftar</div>
+        </div>
+        <div class="logi-card">
+          <div class="icon">🥪</div>
+          <div class="name">SNACK BOX</div>
+          <div class="num" id="stat-snackbox">0</div>
+          <div class="of-total">dari <span id="stat-snackbox-total">0</span> total terdaftar</div>
+        </div>
+        <div class="logi-card">
+          <div class="icon">🍭</div>
+          <div class="name">SNACK CEMILAN (ANAK)</div>
+          <div class="num" id="stat-kidsnack">0</div>
+          <div class="of-total">dari <span id="stat-kidsnack-total">0</span> total terdaftar</div>
+        </div>
+        <div class="logi-card">
+          <div class="icon">👜</div>
+          <div class="name">STRING BAG</div>
+          <div class="num" id="stat-stringbag">0</div>
+          <div class="of-total">dari <span id="stat-stringbag-total">0</span> total terdaftar</div>
+        </div>
+      </div>
+
+      <div class="breakdown">
+        <h3>Rincian usia anggota keluarga (sudah check-in)</h3>
+        <div class="bd-row"><div class="k">Karyawan</div><div class="v" id="bd-karyawan">0</div></div>
+        <div class="bd-row"><div class="k">Dewasa (pasangan/ortu/kerabat, 12+ th)</div><div class="v" id="bd-dewasa">0</div></div>
+        <div class="bd-row"><div class="k">Anak Sekolah (6–11 th)</div><div class="v" id="bd-anaksekolah">0</div></div>
+        <div class="bd-row"><div class="k">Anak Balita (≤5 th)</div><div class="v" id="bd-balita">0</div></div>
+      </div>
+
+      <div class="search-card">
+        <h3>🔍 Cari Data Keluarga</h3>
+        <input class="input" type="text" id="family-search-input" placeholder="Nama atau kode keluarga">
+        <div id="family-search-results"></div>
+      </div>
+
+      <div class="assumption-note">
+        <b>Catatan asumsi</b> — Lunch: 1 per orang (karyawan + semua anggota keluarga). Snack Box: karyawan + anggota dewasa (12+ th). Snack Cemilan: anak sekolah (6–11 th) + balita (≤5 th). String Bag: diasumsikan 1 per keluarga (sama seperti kaos) — <b>tolong dikoreksi kalau aturan aslinya beda</b>. Angka "sudah check-in" mengikuti status check-in gerbang; angka "total terdaftar" menghitung SEMUA baris di sheet Registrasi (termasuk yang belum/tidak hadir), jadi hanya patokan kasar, bukan jumlah pasti yang akan datang.
+      </div>
+    </div>
+
+    <div id="empty-state" class="empty-state" style="display:none;">Belum ada data keluarga.</div>
+
+  </div>
+
+<script>
+const CONFIG = {
+  ADMIN_URL: "https://script.google.com/macros/s/AKfycbxfxGURswlAEwqZC0qdZrM1WzHv_-ng6AwwZVHMkdBNWebdoO3K_4G55m7t0i8q4X-u9Q/exec", // .../exec dari AppsScript_2_Panitia_CheckIn.gs — SAMA PERSIS dengan index.html & scanner.html
+  REFRESH_MS: 30000 // auto-refresh setiap 30 detik
+};
+const LS_PIN = "fd26_monitor_pin";
+const LS_CACHE = "fd26_monitor_cache";
+
+let pin = null;
+let refreshTimer = null;
+let allFamilies = [];
+
+const loginView = document.getElementById("login-view");
+const dashboard = document.getElementById("dashboard");
+const pinInput = document.getElementById("pin-input");
+const loginBtn = document.getElementById("login-btn");
+const loginMsg = document.getElementById("login-msg");
+const refreshBtn = document.getElementById("refresh-btn");
+const logoutBtn = document.getElementById("logout-btn");
+const lastUpdatedEl = document.getElementById("last-updated");
+const emptyState = document.getElementById("empty-state");
+const networkBadge = document.getElementById("network-badge");
+const networkBadgeText = document.getElementById("network-badge-text");
+const offlineBanner = document.getElementById("offline-banner");
+const familySearchInput = document.getElementById("family-search-input");
+const familySearchResults = document.getElementById("family-search-results");
+
+function updateNetworkBadge(){
+  const online = navigator.onLine;
+  networkBadge.className = "badge-net " + (online ? "online" : "offline");
+  networkBadgeText.textContent = online ? "Online" : "Offline";
+}
+window.addEventListener("online", updateNetworkBadge);
+window.addEventListener("offline", updateNetworkBadge);
+updateNetworkBadge();
+
+function escapeHtml(str){
+  return String(str ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+
+async function doLogin(){
+  const val = pinInput.value.trim();
+  if(!val) return;
+  loginMsg.classList.remove("show");
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Memeriksa...";
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ action: "verifyPin", pin: val })
+    });
+    const data = await res.json();
+    if(data.valid){
+      pin = val;
+      localStorage.setItem(LS_PIN, val);
+      pinInput.value = "";
+      enterDashboard();
+    } else {
+      loginMsg.textContent = "PIN salah.";
+      loginMsg.classList.add("show");
+    }
+  }catch(err){
+    loginMsg.textContent = "Gagal mengirim. Periksa koneksi dan coba lagi.";
+    loginMsg.classList.add("show");
+  }finally{
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Masuk";
+  }
+}
+loginBtn.addEventListener("click", doLogin);
+pinInput.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); doLogin(); } });
+
+function enterDashboard(){
+  loginView.style.display = "none";
+  dashboard.style.display = "block";
+  loadData();
+  if(refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(loadData, CONFIG.REFRESH_MS);
+}
+
+// PIN sudah tersimpan dari sesi sebelumnya (offline-first: tidak perlu online
+// untuk buka kembali dashboard, cukup pernah login sukses satu kali sebelumnya).
+const savedPin = localStorage.getItem(LS_PIN);
+if(savedPin){
+  pin = savedPin;
+  enterDashboard();
+}
+
+logoutBtn.addEventListener("click", ()=>{
+  pin = null;
+  localStorage.removeItem(LS_PIN);
+  localStorage.removeItem(LS_CACHE);
+  if(refreshTimer) clearInterval(refreshTimer);
+  dashboard.style.display = "none";
+  loginView.style.display = "block";
+});
+
+refreshBtn.addEventListener("click", loadData);
+
+function parseAges(usiaJson){
+  try{
+    const arr = JSON.parse(usiaJson || "[]");
+    return arr.map(Number).filter(n => !isNaN(n));
+  }catch(e){ return []; }
+}
+
+function classifyAge(age){
+  if(age <= 5) return "balita";
+  if(age >= 6 && age <= 11) return "anakSekolah";
+  return "dewasa";
+}
+
+function renderFamilies(families, meta){
+  meta = meta || {};
+  allFamilies = families;
+  if(!families.length){
+    emptyState.style.display = "block";
+    return;
+  }
+  emptyState.style.display = "none";
+
+  // Akumulator: "checkedin" = sudah check-in gerbang, "total" = semua baris terdaftar
+  const acc = {
+    checkedin: { families:0, members:0, balita:0, anakSekolah:0, dewasa:0, karyawan:0 },
+    total:     { families:0, members:0, balita:0, anakSekolah:0, dewasa:0, karyawan:0 }
+  };
+
+  families.forEach(f => {
+    const ages = parseAges(f.usiaAnggota);
+    const bucket = { balita:0, anakSekolah:0, dewasa:0 };
+    ages.forEach(a => { bucket[classifyAge(a)]++; });
+
+    const target = f.statusCheckin ? acc.checkedin : null;
+    const buckets = target ? [acc.total, target] : [acc.total];
+
+    buckets.forEach(b => {
+      b.families += 1;
+      b.karyawan += 1;
+      b.members += ages.length;
+      b.balita += bucket.balita;
+      b.anakSekolah += bucket.anakSekolah;
+      b.dewasa += bucket.dewasa;
+    });
+  });
+
+  function computeLogistics(b){
+    return {
+      lunch: b.karyawan + b.members,                 // 1 per orang
+      snackBox: b.karyawan + b.dewasa,                // karyawan + dewasa
+      kidsSnack: b.anakSekolah + b.balita,             // anak sekolah + balita
+      stringBag: b.families                            // asumsi: 1 per keluarga
+    };
+  }
+  const logC = computeLogistics(acc.checkedin);
+  const logT = computeLogistics(acc.total);
+
+  document.getElementById("stat-members-checkedin").textContent = acc.checkedin.members;
+  document.getElementById("stat-members-total").textContent = acc.total.members;
+  document.getElementById("stat-families-checkedin").textContent = acc.checkedin.families;
+  document.getElementById("stat-families-total").textContent = acc.total.families;
+  const pct = acc.total.families ? Math.round((acc.checkedin.families / acc.total.families) * 100) : 0;
+  document.getElementById("progress-fill").style.width = pct + "%";
+
+  document.getElementById("stat-lunch").textContent = logC.lunch;
+  document.getElementById("stat-lunch-total").textContent = logT.lunch;
+  document.getElementById("stat-snackbox").textContent = logC.snackBox;
+  document.getElementById("stat-snackbox-total").textContent = logT.snackBox;
+  document.getElementById("stat-kidsnack").textContent = logC.kidsSnack;
+  document.getElementById("stat-kidsnack-total").textContent = logT.kidsSnack;
+  document.getElementById("stat-stringbag").textContent = logC.stringBag;
+  document.getElementById("stat-stringbag-total").textContent = logT.stringBag;
+
+  document.getElementById("bd-karyawan").textContent = acc.checkedin.karyawan;
+  document.getElementById("bd-dewasa").textContent = acc.checkedin.dewasa;
+  document.getElementById("bd-anaksekolah").textContent = acc.checkedin.anakSekolah;
+  document.getElementById("bd-balita").textContent = acc.checkedin.balita;
+
+  if(meta.fromCache){
+    const waktu = new Date(meta.cachedAt).toLocaleTimeString("id-ID", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+    offlineBanner.textContent = "📴 Offline — menampilkan data tersimpan dari " + waktu + ". Angka bisa jadi belum termasuk check-in terbaru.";
+    offlineBanner.classList.add("show");
+    lastUpdatedEl.textContent = "Data cache: " + waktu;
+  } else {
+    offlineBanner.classList.remove("show");
+    const now = new Date();
+    lastUpdatedEl.textContent = "Update terakhir: " + now.toLocaleTimeString("id-ID", {hour:"2-digit", minute:"2-digit", second:"2-digit"});
+  }
+
+  renderFamilySearch();
+}
+
+function computeFamilyLogistics(f){
+  const ages = parseAges(f.usiaAnggota);
+  const bucket = { balita:0, anakSekolah:0, dewasa:0 };
+  ages.forEach(a => { bucket[classifyAge(a)]++; });
+  return {
+    lunch: 1 + ages.length,          // karyawan + semua anggota keluarga
+    snackBox: 1 + bucket.dewasa,     // karyawan + anggota dewasa
+    kidsSnack: bucket.anakSekolah + bucket.balita,
+    stringBag: 1                     // asumsi: 1 per keluarga
+  };
+}
+
+function renderFamilySearch(){
+  const q = familySearchInput.value.trim().toLowerCase();
+  if(!q){
+    familySearchResults.innerHTML = `<p style="color:var(--muted);font-size:13px;">${allFamilies.length} keluarga dimuat. Ketik nama atau kode keluarga untuk mencari.</p>`;
+    return;
+  }
+  const matches = allFamilies.filter(f =>
+    String(f.nama || "").toLowerCase().includes(q) ||
+    String(f.kodeKeluarga || "").toLowerCase().includes(q)
+  ).slice(0, 30);
+
+  if(!matches.length){
+    familySearchResults.innerHTML = `<p style="color:var(--muted);font-size:13px;">Tidak ditemukan.</p>`;
+    return;
+  }
+  familySearchResults.innerHTML = `<div class="family-results">` + matches.map(f => {
+    const logi = computeFamilyLogistics(f);
+    const statusLabel = f.statusCheckin
+      ? `✅ Sudah check-in${f.waktuCheckin ? " · " + escapeHtml(f.waktuCheckin) : ""}`
+      : `⏳ Belum check-in`;
+    return `
+      <div class="family-result-card">
+        <div class="name">${escapeHtml(f.nama)} &middot; ${escapeHtml(f.kodeKeluarga)}</div>
+        <div class="status">${statusLabel}</div>
+        <div class="family-logi-row">
+          <span class="item">🍱 Lunch: <b>${logi.lunch}</b></span>
+          <span class="item">🥪 Snack Box: <b>${logi.snackBox}</b></span>
+          <span class="item">🍭 Kids Snack: <b>${logi.kidsSnack}</b></span>
+          <span class="item">👜 String Bag: <b>${logi.stringBag}</b></span>
+        </div>
+      </div>`;
+  }).join("") + `</div>`;
+}
+familySearchInput.addEventListener("input", renderFamilySearch);
+
+async function loadData(){
+  if(!pin) return;
+  try{
+    const res = await fetch(CONFIG.ADMIN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ action: "list", pin })
+    });
+    const data = await res.json();
+    const families = data.families || [];
+    const cachedAt = Date.now();
+    try{ localStorage.setItem(LS_CACHE, JSON.stringify({ families, cachedAt })); }catch(e){ /* storage penuh/nonaktif — abaikan, tidak fatal */ }
+    renderFamilies(families, { fromCache:false });
+  }catch(err){
+    // Offline atau server tidak terjangkau — coba pakai data tersimpan terakhir di perangkat ini.
+    let cached = null;
+    try{ cached = JSON.parse(localStorage.getItem(LS_CACHE) || "null"); }catch(e){ cached = null; }
+    if(cached && cached.families){
+      renderFamilies(cached.families, { fromCache:true, cachedAt: cached.cachedAt });
+    } else {
+      lastUpdatedEl.textContent = "Gagal memuat data, dan belum ada data tersimpan di perangkat ini.";
+    }
+  }
+}
+
+</script>
+</body>
+</html>
